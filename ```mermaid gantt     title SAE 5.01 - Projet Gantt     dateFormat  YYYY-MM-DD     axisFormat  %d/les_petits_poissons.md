@@ -5,7 +5,7 @@ gantt
     axisFormat  %d/%m
 
     section Création et préparation
-    création d'un git partagé     :s0, 2025-12-01, 1d
+    creation d'un git partager    :s0, 2025-12-01, 1d
     diagramme topologie           :s1, 2025-12-01, 1d
 
     section Mise en place et développement
