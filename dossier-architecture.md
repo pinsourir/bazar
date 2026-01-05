@@ -1,13 +1,13 @@
 # Dossier d’architecture  
 **SAE 5.01 – Archi Wi-Fi sécurisée multi-sites**  
-BUT Réseaux & Télécommunications – Parcours Cyber / ROM  
+BUT Réseaux & Télécommunications – Parcours Cyber  
 Année univ. 2025–2026  
 
 ---
 
-## 1. Contexte prof.
+## 1. Contexte.
 
-La chaîne de salles de sport exploitée par l’entreprise dispose de plusieurs sites géographiquement distincts.  
+La chaîne de salles de sport exploitée par l’entreprise dispose de plusieurs sites distincts.  
 Chaque salle est équipée d’un accès Internet autonome reposant sur un routeur 4G **TP-Link TL-MR100**.
 
 La direction souhaite homogénéiser et sécuriser l’infra Wi-Fi de l’ensemble des sites, tout en centralisant l’authentification, la supervision et la journalisation sur un serveur Linux unique situé au siège (ou dans un petit DC).
@@ -16,10 +16,10 @@ Le projet est conçu comme un **modèle reproductible**, applicable à l’ensem
 
 ---
 
-## 2. Objectifs de sécu. et contraintes
+## 2. Objectifs de sécu et contraintes
 
 ### 2.1 Objectifs
-- Mettre en place une auth. Wi-Fi sécurisée pour les employés.
+- Mettre en place une auth Wi-Fi sécurisée pour les employés.
 - Fournir un accès Wi-Fi invité strictement isolé du réseau interne.
 - Centraliser la gestion des comptes et la supervision.
 - Réduire la surface d’attaque du serveur central.
@@ -27,7 +27,7 @@ Le projet est conçu comme un **modèle reproductible**, applicable à l’ensem
 ### 2.2 Contraintes
 - Routeur imposé : **TP-Link TL-MR100**.
 - Accès Internet via 4G (NAT, pas d’IP publique fixe).
-- Interdiction d’utiliser Active Directory, daloRADIUS ou une solution clé en main.
+- Ne pas utiliser Active Directory, daloRADIUS ou une solution clé en main.
 - Infra basée sur une install Linux standard.
 
 ---
@@ -37,7 +37,7 @@ Le projet est conçu comme un **modèle reproductible**, applicable à l’ensem
 Chaque site distant repose sur un routeur MR100 configuré de manière identique.  
 L’authentification, la supervision et la journalisation sont **centralisées** sur un serveur Linux.
 
-### 3.1 Vue logique simplifiée
+### 3.1 Visualisation:
 
 Clients Wi-Fi  
 ├─ SSID « Entreprise » → WPA2-Enterprise (802.1X)  
