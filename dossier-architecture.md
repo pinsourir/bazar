@@ -85,9 +85,10 @@ Le certif serveur permet :
 - d’éviter les attaques de type *Evil Twin* ;
 - de chiffrer les échanges d’authentification.
 
-Evil Twin: le pirate crée un réseau sans fil ayant le même ssid que le réseau ciblé, il force ensuite le ou les clients ciblés du réseau à se connecter à son double.
 
 Aucun certif client n’est requis, ce qui réduit la complexité globale.
+
+Evil Twin: le pirate crée un réseau sans fil ayant le même ssid que le réseau ciblé, il force ensuite le ou les clients ciblés du réseau à se connecter à son double.
 
 ---
 
@@ -109,7 +110,7 @@ Les requêtes SQL sont paramétrées afin d’éviter les injections SQL.
 
 Le routeur MR100 propose un SSID « Guest Network » permettant :
 - un SSID dédié ;
-- un accès Internet uniquement ;
+- un accès externe uniquement ;
 - un isolement auto du réseau interne.
 
 Cependant, ce mécanisme ne repose pas sur un vrai cloisonnement VLAN, mais sur des règles internes au routeur.
