@@ -85,6 +85,8 @@ Le certif serveur permet :
 - d’éviter les attaques de type *Evil Twin* ;
 - de chiffrer les échanges d’authentification.
 
+Evil Twin: le pirate crée un réseau sans fil ayant le même ssid que le réseau ciblé, il force ensuite le ou les clients ciblés du réseau à se connecter à son double.
+
 Aucun certif client n’est requis, ce qui réduit la complexité globale.
 
 ---
