@@ -2,164 +2,211 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Arbre Généalogique Mariage</title>
+<title>Arbre Mariage Premium</title>
+
 <style>
-    body {
-        margin: 0;
-        background: #0b0b0b;
-        overflow: hidden;
-        font-family: Arial;
-        color: white;
-    }
+body {
+    margin: 0;
+    background: radial-gradient(circle, #0a0a0a, #000);
+    overflow: hidden;
+    font-family: Arial;
+    color: white;
+}
 
-    .tree {
-        position: relative;
-        width: 100vw;
-        height: 100vh;
-    }
+svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 
-    .branch {
-        position: absolute;
-        width: 4px;
-        background: linear-gradient(to top, transparent, gold);
-        transform-origin: bottom;
-        opacity: 0;
-        transition: all 2s ease;
-    }
+/* Branches */
+.branch {
+    fill: none;
+    stroke: gold;
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    filter: drop-shadow(0 0 6px gold);
+    animation: draw 4s forwards;
+}
 
-    .left {
-        bottom: 0;
-        left: 30%;
-        height: 0;
-        transform: rotate(-30deg);
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
     }
+}
 
-    .right {
-        bottom: 0;
-        right: 30%;
-        height: 0;
-        transform: rotate(30deg);
-    }
+/* Lumière qui circule */
+.glow {
+    stroke: white;
+    stroke-width: 2;
+    stroke-dasharray: 10 10;
+    animation: flow 2s linear infinite;
+}
 
-    .grow {
-        height: 60%;
+@keyframes flow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 20; }
+}
+
+/* Photos */
+.carousel {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 15px gold;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: 1s;
+}
+
+.carousel img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: 1s;
+}
+
+.carousel.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.carousel img.active {
+    opacity: 1;
+}
+
+/* Texte final */
+.title {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    font-size: 3em;
+    opacity: 0;
+    transition: 2s;
+}
+
+.title.show {
+    opacity: 1;
+}
+
+/* Particules */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: gold;
+    border-radius: 50%;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
         opacity: 1;
     }
-
-    .photo {
-        position: absolute;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
+    to {
+        transform: translateY(-10vh);
         opacity: 0;
-        transform: scale(0.5);
-        transition: all 1s ease;
-        box-shadow: 0 0 10px gold;
     }
-
-    .show {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    .center-branch {
-        position: absolute;
-        bottom: 40%;
-        left: 50%;
-        width: 4px;
-        height: 0;
-        background: gold;
-        opacity: 0;
-        transition: 2s;
-    }
-
-    .final {
-        height: 30%;
-        opacity: 1;
-    }
-
-    .title {
-        position: absolute;
-        top: 20%;
-        width: 100%;
-        text-align: center;
-        font-size: 2em;
-        opacity: 0;
-        transition: 2s;
-    }
-
-    .title.show {
-        opacity: 1;
-    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="tree">
-    <div class="branch left" id="bruno"></div>
-    <div class="branch right" id="alicia"></div>
-    <div class="center-branch" id="fusion"></div>
+<svg>
+    <!-- Branche Bruno -->
+    <path id="bruno" class="branch" d="M400 800 Q300 500 400 300" />
+    <path class="glow" d="M400 800 Q300 500 400 300" />
 
-    <div class="title" id="title">Bruno ❤️ Alicia</div>
-</div>
+    <!-- Branche Alicia -->
+    <path id="alicia" class="branch" d="M1200 800 Q1300 500 1200 300" />
+    <path class="glow" d="M1200 800 Q1300 500 1200 300" />
+
+    <!-- Fusion -->
+    <path id="fusion" class="branch" d="M400 300 Q800 200 1200 300" style="opacity:0"/>
+</svg>
+
+<div class="title" id="title">Bruno ❤️ Alicia</div>
 
 <script>
-const brunoPhotos = [
-    "photo1.jpg",
-    "photo2.jpg",
-    "photo3.jpg"
-];
+// 📸 PHOTOS
+const brunoPhotos = ["photo1.jpg","photo2.jpg","photo3.jpg"];
+const aliciaPhotos = ["photo4.jpg","photo5.jpg","photo6.jpg"];
 
-const aliciaPhotos = [
-    "photo4.jpg",
-    "photo5.jpg",
-    "photo6.jpg"
-];
-
-function createPhoto(src, x, y) {
+// 🎞️ Création carrousel
+function createCarousel(x, y, photos) {
     const div = document.createElement("div");
-    div.className = "photo";
-    div.style.backgroundImage = `url(${src})`;
+    div.className = "carousel";
     div.style.left = x + "px";
     div.style.top = y + "px";
+
+    photos.forEach((src, i) => {
+        const img = document.createElement("img");
+        img.src = src;
+        if(i === 0) img.classList.add("active");
+        div.appendChild(img);
+    });
+
     document.body.appendChild(div);
 
     setTimeout(() => div.classList.add("show"), 100);
+
+    // rotation images
+    let index = 0;
+    setInterval(() => {
+        const imgs = div.querySelectorAll("img");
+        imgs[index].classList.remove("active");
+        index = (index + 1) % imgs.length;
+        imgs[index].classList.add("active");
+    }, 2000);
 }
 
-function animateBranch(branchId, photos, side) {
-    const branch = document.getElementById(branchId);
-    branch.classList.add("grow");
+// 🌟 Particules
+function createParticles() {
+    setInterval(() => {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(p);
 
-    photos.forEach((photo, i) => {
-        setTimeout(() => {
-            let x = side === "left" ? 300 - (i * 60) : window.innerWidth - 300 + (i * 60);
-            let y = window.innerHeight - (200 + i * 100);
-
-            createPhoto(photo, x, y);
-        }, i * 1500);
-    });
+        setTimeout(() => p.remove(), 5000);
+    }, 200);
 }
 
-// Animation timeline
-setTimeout(() => {
-    animateBranch("bruno", brunoPhotos, "left");
-}, 1000);
+// 🎬 TIMELINE
 
+// Bruno
 setTimeout(() => {
-    animateBranch("alicia", aliciaPhotos, "right");
-}, 6000);
+    createCarousel(350, 500, brunoPhotos);
+}, 2000);
 
+// Alicia
 setTimeout(() => {
-    document.getElementById("fusion").classList.add("final");
-}, 11000);
+    createCarousel(1100, 500, aliciaPhotos);
+}, 5000);
 
+// Fusion
+setTimeout(() => {
+    const fusion = document.getElementById("fusion");
+    fusion.style.opacity = 1;
+    fusion.style.animation = "draw 3s forwards";
+}, 8000);
+
+// Titre final
 setTimeout(() => {
     document.getElementById("title").classList.add("show");
-}, 13000);
+}, 11000);
+
+// Particules
+createParticles();
+
 </script>
 
 </body>
