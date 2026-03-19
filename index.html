@@ -2,64 +2,50 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Arbre Mariage Premium</title>
+<title>Arbre Féérique Mariage</title>
 
 <style>
 body {
     margin: 0;
-    background: radial-gradient(circle, #0a0a0a, #000);
+    background: radial-gradient(circle at center, #1a120b, #000);
     overflow: hidden;
-    font-family: Arial;
-    color: white;
 }
 
-svg {
+/* 🌳 IMAGE ARBRE */
+.tree-container {
     position: absolute;
     width: 100%;
     height: 100%;
+    background: url("arbre.png") center/contain no-repeat;
+    filter: drop-shadow(0 0 20px rgba(255,215,0,0.3));
 }
 
-/* Branches */
-.branch {
-    fill: none;
-    stroke: gold;
-    stroke-width: 3;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    filter: drop-shadow(0 0 6px gold);
-    animation: draw 4s forwards;
+/* ✨ Zones lumineuses */
+.glow-zone {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: 2s;
+    background: radial-gradient(circle, rgba(255,215,0,0.8), transparent);
 }
 
-@keyframes draw {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-/* Lumière qui circule */
-.glow {
-    stroke: white;
-    stroke-width: 2;
-    stroke-dasharray: 10 10;
-    animation: flow 2s linear infinite;
-}
-
-@keyframes flow {
-    from { stroke-dashoffset: 0; }
-    to { stroke-dashoffset: 20; }
-}
-
-/* Photos */
+/* 📸 Carrousel */
 .carousel {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 15px gold;
+    box-shadow: 0 0 25px gold;
     opacity: 0;
-    transform: scale(0.5);
-    transition: 1s;
+    transform: scale(0.6);
+    transition: 1.5s;
+}
+
+.carousel.show {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .carousel img {
@@ -71,76 +57,43 @@ svg {
     transition: 1s;
 }
 
-.carousel.show {
-    opacity: 1;
-    transform: scale(1);
-}
-
 .carousel img.active {
     opacity: 1;
 }
 
-/* Texte final */
-.title {
-    position: absolute;
-    top: 20%;
-    width: 100%;
-    text-align: center;
-    font-size: 3em;
-    opacity: 0;
-    transition: 2s;
-}
-
-.title.show {
-    opacity: 1;
-}
-
-/* Particules */
+/* 🌟 Particules */
 .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     background: gold;
     border-radius: 50%;
-    animation: float 5s linear infinite;
+    animation: float 6s linear infinite;
 }
 
 @keyframes float {
-    from {
-        transform: translateY(100vh);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
+    from { transform: translateY(100vh); opacity:1; }
+    to { transform: translateY(-10vh); opacity:0; }
 }
 </style>
 </head>
 
 <body>
 
-<svg>
-    <!-- Branche Bruno -->
-    <path id="bruno" class="branch" d="M400 800 Q300 500 400 300" />
-    <path class="glow" d="M400 800 Q300 500 400 300" />
+<div class="tree-container"></div>
 
-    <!-- Branche Alicia -->
-    <path id="alicia" class="branch" d="M1200 800 Q1300 500 1200 300" />
-    <path class="glow" d="M1200 800 Q1300 500 1200 300" />
-
-    <!-- Fusion -->
-    <path id="fusion" class="branch" d="M400 300 Q800 200 1200 300" style="opacity:0"/>
-</svg>
-
-<div class="title" id="title">Bruno ❤️ Alicia</div>
+<!-- Zones lumineuses -->
+<div id="glowBruno" class="glow-zone" style="left:25%; top:40%; width:300px; height:300px;"></div>
+<div id="glowAlicia" class="glow-zone" style="right:25%; top:40%; width:300px; height:300px;"></div>
+<div id="glowCenter" class="glow-zone" style="left:50%; top:55%; width:350px; height:350px; transform:translateX(-50%);"></div>
 
 <script>
 // 📸 PHOTOS
-const brunoPhotos = ["photo1.jpg","photo2.jpg","photo3.jpg"];
-const aliciaPhotos = ["photo4.jpg","photo5.jpg","photo6.jpg"];
+const brunoPhotos = ["b1.jpg","b2.jpg","b3.jpg"];
+const aliciaPhotos = ["a1.jpg","a2.jpg","a3.jpg"];
+const couplePhotos = ["c1.jpg","c2.jpg","c3.jpg"];
 
-// 🎞️ Création carrousel
+// 🎞️ Carrousel
 function createCarousel(x, y, photos) {
     const div = document.createElement("div");
     div.className = "carousel";
@@ -158,54 +111,43 @@ function createCarousel(x, y, photos) {
 
     setTimeout(() => div.classList.add("show"), 100);
 
-    // rotation images
     let index = 0;
     setInterval(() => {
         const imgs = div.querySelectorAll("img");
         imgs[index].classList.remove("active");
         index = (index + 1) % imgs.length;
         imgs[index].classList.add("active");
-    }, 2000);
+    }, 2500);
 }
 
-// 🌟 Particules
-function createParticles() {
-    setInterval(() => {
-        const p = document.createElement("div");
-        p.className = "particle";
-        p.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(p);
-
-        setTimeout(() => p.remove(), 5000);
-    }, 200);
-}
+// ✨ Particules
+setInterval(() => {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 6000);
+}, 150);
 
 // 🎬 TIMELINE
 
 // Bruno
 setTimeout(() => {
-    createCarousel(350, 500, brunoPhotos);
+    document.getElementById("glowBruno").style.opacity = 1;
+    createCarousel(window.innerWidth*0.25, window.innerHeight*0.4, brunoPhotos);
 }, 2000);
 
 // Alicia
 setTimeout(() => {
-    createCarousel(1100, 500, aliciaPhotos);
-}, 5000);
+    document.getElementById("glowAlicia").style.opacity = 1;
+    createCarousel(window.innerWidth*0.65, window.innerHeight*0.4, aliciaPhotos);
+}, 6000);
 
-// Fusion
+// Couple (tronc)
 setTimeout(() => {
-    const fusion = document.getElementById("fusion");
-    fusion.style.opacity = 1;
-    fusion.style.animation = "draw 3s forwards";
-}, 8000);
-
-// Titre final
-setTimeout(() => {
-    document.getElementById("title").classList.add("show");
-}, 11000);
-
-// Particules
-createParticles();
+    document.getElementById("glowCenter").style.opacity = 1;
+    createCarousel(window.innerWidth*0.45, window.innerHeight*0.6, couplePhotos);
+}, 10000);
 
 </script>
 
