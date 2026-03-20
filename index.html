@@ -2,71 +2,99 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Arbre Magique</title>
 
 <style>
 body {
     margin:0;
-    background:#0b0b0b;
     overflow:hidden;
-    font-family: 'Arial';
-    color:white;
+    background: radial-gradient(circle, #1a120b, #000);
 }
 
-svg {
-    width:100vw;
-    height:100vh;
-}
-
-.branch {
-    fill:none;
-    stroke:gold;
-    stroke-width:3;
-    stroke-dasharray:1000;
-    stroke-dashoffset:1000;
-    filter: drop-shadow(0 0 6px gold);
-    transition: stroke-dashoffset 4s ease;
-}
-
-.draw {
-    stroke-dashoffset:0;
-}
-
-.name {
-    fill:white;
-    font-size:24px;
-    opacity:0;
-    transition:2s;
-}
-
-.show {
-    opacity:1;
-}
-
-.photo {
+/* 🌳 arbre visible */
+.tree {
     position:absolute;
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transform:scale(0.5);
-    transition:1s;
-    box-shadow:0 0 10px gold;
+    width:100%;
+    height:100%;
+    background-image: url("arbre.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index:1;
 }
 
-.photo.show {
+/* ✨ glow */
+.glow {
+    position:absolute;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,215,0,0.9), transparent);
+    opacity:0;
+    filter: blur(30px);
+    transition: opacity 2s ease;
+}
+
+/* 📸 carrousel */
+.carousel {
+    position:absolute;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    overflow:hidden;
+    box-shadow:0 0 30px gold;
+    opacity:0;
+    transform:scale(0.6);
+    transition:1.5s;
+    z-index:2;
+}
+
+.carousel.show {
     opacity:1;
     transform:scale(1);
 }
 
-.center-text {
+.carousel.hide {
+    opacity:0;
+    transform:scale(0.5);
+}
+
+.carousel img {
     position:absolute;
-    top:45%;
     width:100%;
-    text-align:center;
-    font-size:40px;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+}
+
+.carousel img.active {
+    opacity:1;
+}
+
+/* 🌟 particules */
+.particle {
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:gold;
+    border-radius:50%;
+    animation:float 7s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity:1; }
+    to { transform: translateY(-10vh); opacity:0; }
+}
+
+/* ❤️ cœur */
+.heart {
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,150,150,0.9), transparent);
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
     opacity:0;
     transition:2s;
 }
@@ -75,75 +103,94 @@ svg {
 
 <body>
 
-<svg viewBox="0 0 1000 600">
+<div class="tree"></div>
 
-    <!-- Branche Bruno -->
-    <path id="branchLeft" class="branch"
-          d="M500 550 Q350 400 250 200" />
+<div id="glowBruno" class="glow" style="left:22%; top:35%;"></div>
+<div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div>
+<div id="glowCenter" class="glow" style="left:50%; top:60%; transform:translateX(-50%);"></div>
 
-    <!-- Branche Alicia -->
-    <path id="branchRight" class="branch"
-          d="M500 550 Q650 400 750 200" />
-
-    <!-- Texte -->
-    <text id="brunoText" class="name" x="250" y="200">Bruno</text>
-    <text id="aliciaText" class="name" x="750" y="200">Alicia</text>
-
-</svg>
-
-<div id="centerText" class="center-text">NOUS</div>
+<div id="heart" class="heart"></div>
 
 <script>
 
-const brunoPhotos = ["photo1.jpg","photo2.jpg","photo3.jpg"];
-const aliciaPhotos = ["photo4.jpg","photo5.jpg","photo6.jpg"];
+// 📸 photos
+const bruno = ["b1.jpg","b2.jpg","b3.jpg"];
+const alicia = ["a1.jpg","a2.jpg","a3.jpg"];
+const couple = ["c1.jpg","c2.jpg","c3.jpg"];
 
-function placePhotos(photos, startX, startY, direction) {
+// 🎞️ carrousel
+function createCarousel(x,y,photos){
+    let div=document.createElement("div");
+    div.className="carousel";
+    div.style.left=x+"px";
+    div.style.top=y+"px";
+
     photos.forEach((p,i)=>{
-        setTimeout(()=>{
-            let div = document.createElement("div");
-            div.className="photo";
-            div.style.backgroundImage=`url(${p})`;
-
-            let x = startX + (direction * i * 80);
-            let y = startY - (i * 80);
-
-            div.style.left = x+"px";
-            div.style.top = y+"px";
-
-            document.body.appendChild(div);
-
-            setTimeout(()=>div.classList.add("show"),100);
-        }, i*1200);
+        let img=document.createElement("img");
+        img.src=p;
+        if(i===0) img.classList.add("active");
+        div.appendChild(img);
     });
+
+    document.body.appendChild(div);
+
+    setTimeout(()=>div.classList.add("show"),100);
+
+    let i=0;
+    let interval = setInterval(()=>{
+        let imgs=div.querySelectorAll("img");
+        imgs[i].classList.remove("active");
+        i=(i+1)%imgs.length;
+        imgs[i].classList.add("active");
+    },2000);
+
+    return {div, interval};
 }
 
-// Animation
+// 🌟 particules
+setInterval(()=>{
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*window.innerWidth+"px";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),7000);
+},150);
 
-// 1️⃣ Bruno
-setTimeout(()=>{
-    document.getElementById("branchLeft").classList.add("draw");
-},1000);
+// 🎬 TIMELINE
 
+// Bruno
 setTimeout(()=>{
-    document.getElementById("brunoText").classList.add("show");
-    placePhotos(brunoPhotos, 250, 400, -1);
-},4000);
+    glowBruno.style.opacity=1;
+    let c = createCarousel(window.innerWidth*0.22, window.innerHeight*0.38, bruno);
 
-// 2️⃣ Alicia
+    // extinction
+    setTimeout(()=>{
+        glowBruno.style.opacity=0;
+        c.div.classList.add("hide");
+        clearInterval(c.interval);
+    },4000);
+
+},2000);
+
+// Alicia
 setTimeout(()=>{
-    document.getElementById("branchRight").classList.add("draw");
+    glowAlicia.style.opacity=1;
+    let c = createCarousel(window.innerWidth*0.68, window.innerHeight*0.38, alicia);
+
+    setTimeout(()=>{
+        glowAlicia.style.opacity=0;
+        c.div.classList.add("hide");
+        clearInterval(c.interval);
+    },4000);
+
 },7000);
 
+// Couple ❤️
 setTimeout(()=>{
-    document.getElementById("aliciaText").classList.add("show");
-    placePhotos(aliciaPhotos, 650, 400, 1);
-},10000);
-
-// 3️⃣ Fusion
-setTimeout(()=>{
-    document.getElementById("centerText").style.opacity=1;
-},14000);
+    glowCenter.style.opacity=1;
+    heart.style.opacity=1;
+    createCarousel(window.innerWidth*0.45, window.innerHeight*0.6, couple);
+},12000);
 
 </script>
 
