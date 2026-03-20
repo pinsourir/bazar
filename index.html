@@ -11,7 +11,6 @@ body {
     font-family: 'Segoe Script', cursive;
 }
 
-/* 🌳 arbre */
 .tree {
     position:absolute;
     width:100%;
@@ -19,29 +18,29 @@ body {
     background:url("arbre.png") center/contain no-repeat;
 }
 
-/* ✨ glow */
+/* glow */
 .glow {
     position:absolute;
-    width:250px;
-    height:250px;
+    width:260px;
+    height:260px;
     border-radius:50%;
     background: radial-gradient(circle, rgba(255,215,0,0.9), transparent);
     opacity:0;
-    filter: blur(30px);
+    filter: blur(35px);
     transition: opacity 2s;
 }
 
-/* 📸 carrousel */
+/* carrousel */
 .carousel {
     position:absolute;
-    width:140px;
-    height:140px;
+    width:150px;
+    height:150px;
     border-radius:50%;
     overflow:hidden;
-    box-shadow:0 0 35px gold;
+    box-shadow:0 0 40px gold;
     opacity:0;
-    transform:scale(0.6);
-    transition:1.5s;
+    transform:scale(0.5);
+    transition:2s;
 }
 
 .carousel.show { opacity:1; transform:scale(1); }
@@ -53,38 +52,34 @@ body {
     height:100%;
     object-fit:cover;
     opacity:0;
+    transition:1.5s;
 }
 
 .carousel img.active { opacity:1; }
 
-/* 📝 textes élégants */
+/* textes */
 .label {
     position:absolute;
     color:#ffd700;
-    font-size:32px;
-    font-weight:500;
-    text-shadow:0 0 10px gold;
-}
-
-/* ✍️ souligné */
-.underline {
+    font-size:34px;
+    text-shadow:0 0 12px gold;
     border-bottom:2px solid gold;
-    padding-bottom:5px;
+    padding-bottom:6px;
 }
 
-/* 💍 anneau */
+/* anneau */
 .ring {
     position:absolute;
-    width:120px;
-    height:120px;
+    width:140px;
+    height:140px;
     border:4px solid gold;
     border-radius:50%;
     top:50%;
     left:50%;
     transform:translate(-50%, -50%);
-    box-shadow:0 0 25px gold;
+    box-shadow:0 0 30px gold;
     opacity:0;
-    animation:spin 8s linear infinite;
+    animation:spin 10s linear infinite;
 }
 
 @keyframes spin {
@@ -92,18 +87,18 @@ body {
     to { transform:translate(-50%, -50%) rotate(360deg); }
 }
 
-/* 🌟 particules centrées */
+/* particules */
 .particle {
     position:absolute;
     width:4px;
     height:4px;
     background:gold;
     border-radius:50%;
-    animation:float 7s linear infinite;
+    animation:float 8s linear infinite;
 }
 
 @keyframes float {
-    from { transform: translateY(80vh); opacity:1; }
+    from { transform: translateY(80vh); }
     to { transform: translateY(10vh); opacity:0; }
 }
 </style>
@@ -113,27 +108,27 @@ body {
 
 <div class="tree"></div>
 
-<!-- ✨ glow -->
+<!-- glow -->
 <div id="glowBruno" class="glow" style="left:22%; top:35%;"></div>
 <div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div>
-<div id="glowCenter" class="glow" style="left:50%; top:55%; transform:translateX(-50%);"></div>
+<div id="glowCenter" class="glow" style="left:50%; top:50%; transform:translateX(-50%);"></div>
 
-<!-- 📝 textes -->
-<div class="label underline" style="left:18%; top:15%;">Bruno</div>
-<div class="label underline" style="right:18%; top:15%;">Alicia</div>
-<div id="nousTxt" class="label underline" style="left:50%; top:45%; transform:translateX(-50%); opacity:0;">Nous</div>
+<!-- textes -->
+<div class="label" style="left:18%; top:12%;">Bruno</div>
+<div class="label" style="right:18%; top:12%;">Alicia</div>
+<div id="nousTxt" class="label" style="left:50%; top:42%; transform:translateX(-50%); opacity:0;">Nous</div>
 
-<!-- 💍 -->
+<!-- anneau -->
 <div id="ring" class="ring"></div>
 
 <script>
 
-// 📸 photos
-const bruno = ["b1.jpg","b2.jpg","b3.jpg"];
-const alicia = ["a1.jpg","a2.jpg","a3.jpg"];
-const couple = ["c1.jpg","c2.jpg","c3.jpg"];
+// 📸 photos (mets 5 / 5 / 10)
+const bruno = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
+const alicia = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
+const couple = ["c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg","c6.jpg","c7.jpg","c8.jpg","c9.jpg","c10.jpg"];
 
-// 🎞️ carrousel
+// 🎞️ carrousel lent
 function createCarousel(x,y,photos){
     let div=document.createElement("div");
     div.className="carousel";
@@ -157,21 +152,21 @@ function createCarousel(x,y,photos){
         imgs[i].classList.remove("active");
         i=(i+1)%imgs.length;
         imgs[i].classList.add("active");
-    },2000);
+    },3000); // 🔥 ralenti ici
 
-    return {div, interval};
+    return {div, interval, duration: photos.length * 3000};
 }
 
-// 🌟 particules centrées sur arbre
+// particules
 setInterval(()=>{
     let p=document.createElement("div");
     p.className="particle";
     p.style.left = (window.innerWidth*0.3 + Math.random()*window.innerWidth*0.4) + "px";
     document.body.appendChild(p);
-    setTimeout(()=>p.remove(),7000);
-},150);
+    setTimeout(()=>p.remove(),8000);
+},200);
 
-// 🎬 TIMELINE
+// 🎬 TIMELINE INTELLIGENTE
 
 // Bruno
 setTimeout(()=>{
@@ -182,7 +177,7 @@ setTimeout(()=>{
         glowBruno.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
-    },4000);
+    }, c.duration);
 
 },2000);
 
@@ -195,23 +190,23 @@ setTimeout(()=>{
         glowAlicia.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
-    },4000);
+    }, c.duration);
 
-},7000);
+}, 2000 + (bruno.length * 3000) + 2000);
 
-// ❤️ couple centré coeur
+// ❤️ couple
 setTimeout(()=>{
     glowCenter.style.opacity=1;
     nousTxt.style.opacity=1;
     ring.style.opacity=1;
 
     createCarousel(
-        window.innerWidth/2 - 70, 
-        window.innerHeight/2 - 70, 
+        window.innerWidth/2 - 75,
+        window.innerHeight/2 - 75,
         couple
     );
 
-},12000);
+}, 2000 + (bruno.length * 3000) + (alicia.length * 3000) + 4000);
 
 </script>
 
