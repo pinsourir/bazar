@@ -10,16 +10,12 @@ body {
     background: radial-gradient(circle, #1a120b, #000);
 }
 
-/* 🌳 arbre visible */
+/* 🌳 arbre */
 .tree {
     position:absolute;
     width:100%;
     height:100%;
-    background-image: url("arbre.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index:1;
+    background:url("arbre.png") center/contain no-repeat;
 }
 
 /* ✨ glow */
@@ -31,7 +27,7 @@ body {
     background: radial-gradient(circle, rgba(255,215,0,0.9), transparent);
     opacity:0;
     filter: blur(30px);
-    transition: opacity 2s ease;
+    transition: opacity 2s;
 }
 
 /* 📸 carrousel */
@@ -45,18 +41,10 @@ body {
     opacity:0;
     transform:scale(0.6);
     transition:1.5s;
-    z-index:2;
 }
 
-.carousel.show {
-    opacity:1;
-    transform:scale(1);
-}
-
-.carousel.hide {
-    opacity:0;
-    transform:scale(0.5);
-}
+.carousel.show { opacity:1; transform:scale(1); }
+.carousel.hide { opacity:0; transform:scale(0.5); }
 
 .carousel img {
     position:absolute;
@@ -65,12 +53,40 @@ body {
     object-fit:cover;
     opacity:0;
 }
+.carousel img.active { opacity:1; }
 
-.carousel img.active {
-    opacity:1;
+/* 📝 textes */
+.label {
+    position:absolute;
+    color:gold;
+    font-size:28px;
+    font-family:cursive;
+    opacity:0;
+    transition:2s;
+    text-shadow:0 0 10px gold;
 }
 
-/* 🌟 particules */
+/* 💍 anneau */
+.ring {
+    position:absolute;
+    width:100px;
+    height:100px;
+    border:4px solid gold;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    box-shadow:0 0 20px gold;
+    opacity:0;
+    animation:spin 6s linear infinite;
+}
+
+@keyframes spin {
+    from { transform:translate(-50%, -50%) rotate(0deg); }
+    to { transform:translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 🌟 particules limitées à l’arbre */
 .particle {
     position:absolute;
     width:4px;
@@ -81,22 +97,8 @@ body {
 }
 
 @keyframes float {
-    from { transform: translateY(100vh); opacity:1; }
-    to { transform: translateY(-10vh); opacity:0; }
-}
-
-/* ❤️ cœur */
-.heart {
-    position:absolute;
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    background: radial-gradient(circle, rgba(255,150,150,0.9), transparent);
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    opacity:0;
-    transition:2s;
+    from { transform: translateY(80vh); opacity:1; }
+    to { transform: translateY(10vh); opacity:0; }
 }
 </style>
 </head>
@@ -109,7 +111,13 @@ body {
 <div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div>
 <div id="glowCenter" class="glow" style="left:50%; top:60%; transform:translateX(-50%);"></div>
 
-<div id="heart" class="heart"></div>
+<!-- 📝 textes -->
+<div id="brunoTxt" class="label" style="left:20%; top:30%;">Bruno</div>
+<div id="aliciaTxt" class="label" style="right:20%; top:30%;">Alicia</div>
+<div id="nousTxt" class="label" style="left:50%; top:48%; transform:translateX(-50%);">Nous</div>
+
+<!-- 💍 anneau -->
+<div id="ring" class="ring"></div>
 
 <script>
 
@@ -147,11 +155,14 @@ function createCarousel(x,y,photos){
     return {div, interval};
 }
 
-// 🌟 particules
+// 🌟 particules limitées zone arbre
 setInterval(()=>{
     let p=document.createElement("div");
     p.className="particle";
-    p.style.left=Math.random()*window.innerWidth+"px";
+
+    // zone centrée (évite les bords)
+    p.style.left = (window.innerWidth*0.3 + Math.random()*window.innerWidth*0.4) + "px";
+
     document.body.appendChild(p);
     setTimeout(()=>p.remove(),7000);
 },150);
@@ -161,11 +172,13 @@ setInterval(()=>{
 // Bruno
 setTimeout(()=>{
     glowBruno.style.opacity=1;
+    brunoTxt.style.opacity=1;
+
     let c = createCarousel(window.innerWidth*0.22, window.innerHeight*0.38, bruno);
 
-    // extinction
     setTimeout(()=>{
         glowBruno.style.opacity=0;
+        brunoTxt.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
     },4000);
@@ -175,20 +188,25 @@ setTimeout(()=>{
 // Alicia
 setTimeout(()=>{
     glowAlicia.style.opacity=1;
+    aliciaTxt.style.opacity=1;
+
     let c = createCarousel(window.innerWidth*0.68, window.innerHeight*0.38, alicia);
 
     setTimeout(()=>{
         glowAlicia.style.opacity=0;
+        aliciaTxt.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
     },4000);
 
 },7000);
 
-// Couple ❤️
+// ❤️ couple
 setTimeout(()=>{
     glowCenter.style.opacity=1;
-    heart.style.opacity=1;
+    nousTxt.style.opacity=1;
+    ring.style.opacity=1;
+
     createCarousel(window.innerWidth*0.45, window.innerHeight*0.6, couple);
 },12000);
 
