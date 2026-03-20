@@ -11,6 +11,7 @@ body {
     font-family: 'Segoe Script', cursive;
 }
 
+/* 🌳 arbre */
 .tree {
     position:absolute;
     width:100%;
@@ -18,7 +19,7 @@ body {
     background:url("arbre.png") center/contain no-repeat;
 }
 
-/* glow */
+/* ✨ glow */
 .glow {
     position:absolute;
     width:260px;
@@ -30,7 +31,7 @@ body {
     transition: opacity 2s;
 }
 
-/* carrousel */
+/* 📸 carrousel */
 .carousel {
     position:absolute;
     width:150px;
@@ -57,7 +58,7 @@ body {
 
 .carousel img.active { opacity:1; }
 
-/* textes */
+/* 📝 textes */
 .label {
     position:absolute;
     color:#ffd700;
@@ -67,7 +68,7 @@ body {
     padding-bottom:6px;
 }
 
-/* anneau */
+/* 💍 anneau */
 .ring {
     position:absolute;
     width:140px;
@@ -87,7 +88,7 @@ body {
     to { transform:translate(-50%, -50%) rotate(360deg); }
 }
 
-/* particules */
+/* 🌟 particules */
 .particle {
     position:absolute;
     width:4px;
@@ -108,27 +109,34 @@ body {
 
 <div class="tree"></div>
 
-<!-- glow -->
+<!-- ✨ glow -->
 <div id="glowBruno" class="glow" style="left:22%; top:35%;"></div>
 <div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div>
-<div id="glowCenter" class="glow" style="left:50%; top:50%; transform:translateX(-50%);"></div>
+<div id="glowCenter" class="glow" style="left:50%; top:52%; transform:translateX(-50%);"></div>
 
-<!-- textes -->
-<div class="label" style="left:18%; top:12%;">Bruno</div>
-<div class="label" style="right:18%; top:12%;">Alicia</div>
-<div id="nousTxt" class="label" style="left:50%; top:42%; transform:translateX(-50%); opacity:0;">Nous</div>
+<!-- 📝 textes -->
+<div class="label" style="left:18%; top:10%;">Bruno</div>
+<div class="label" style="right:18%; top:10%;">Alicia</div>
 
-<!-- anneau -->
+<div id="nousTxt" class="label" 
+     style="left:50%; top:28%; transform:translateX(-50%); opacity:0;">
+    Nous
+</div>
+
+<!-- 💍 anneau -->
 <div id="ring" class="ring"></div>
 
 <script>
 
-// 📸 photos (mets 5 / 5 / 10)
+// 📸 PHOTOS (5 / 5 / 10)
 const bruno = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
 const alicia = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
-const couple = ["c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg","c6.jpg","c7.jpg","c8.jpg","c9.jpg","c10.jpg"];
+const couple = [
+"c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg",
+"c6.jpg","c7.jpg","c8.jpg","c9.jpg","c10.jpg"
+];
 
-// 🎞️ carrousel lent
+// 🎞️ carrousel
 function createCarousel(x,y,photos){
     let div=document.createElement("div");
     div.className="carousel";
@@ -152,12 +160,12 @@ function createCarousel(x,y,photos){
         imgs[i].classList.remove("active");
         i=(i+1)%imgs.length;
         imgs[i].classList.add("active");
-    },3000); // 🔥 ralenti ici
+    },3000);
 
     return {div, interval, duration: photos.length * 3000};
 }
 
-// particules
+// 🌟 particules (centrées sur arbre)
 setInterval(()=>{
     let p=document.createElement("div");
     p.className="particle";
@@ -166,7 +174,7 @@ setInterval(()=>{
     setTimeout(()=>p.remove(),8000);
 },200);
 
-// 🎬 TIMELINE INTELLIGENTE
+// 🎬 TIMELINE
 
 // Bruno
 setTimeout(()=>{
@@ -194,7 +202,7 @@ setTimeout(()=>{
 
 }, 2000 + (bruno.length * 3000) + 2000);
 
-// ❤️ couple
+// ❤️ COUPLE (centré cœur)
 setTimeout(()=>{
     glowCenter.style.opacity=1;
     nousTxt.style.opacity=1;
