@@ -8,6 +8,7 @@ body {
     margin:0;
     overflow:hidden;
     background: radial-gradient(circle, #1a120b, #000);
+    font-family: 'Segoe Script', cursive;
 }
 
 /* 🌳 arbre */
@@ -33,11 +34,11 @@ body {
 /* 📸 carrousel */
 .carousel {
     position:absolute;
-    width:130px;
-    height:130px;
+    width:140px;
+    height:140px;
     border-radius:50%;
     overflow:hidden;
-    box-shadow:0 0 30px gold;
+    box-shadow:0 0 35px gold;
     opacity:0;
     transform:scale(0.6);
     transition:1.5s;
@@ -53,32 +54,37 @@ body {
     object-fit:cover;
     opacity:0;
 }
+
 .carousel img.active { opacity:1; }
 
-/* 📝 textes */
+/* 📝 textes élégants */
 .label {
     position:absolute;
-    color:gold;
-    font-size:28px;
-    font-family:cursive;
-    opacity:0;
-    transition:2s;
+    color:#ffd700;
+    font-size:32px;
+    font-weight:500;
     text-shadow:0 0 10px gold;
+}
+
+/* ✍️ souligné */
+.underline {
+    border-bottom:2px solid gold;
+    padding-bottom:5px;
 }
 
 /* 💍 anneau */
 .ring {
     position:absolute;
-    width:100px;
-    height:100px;
+    width:120px;
+    height:120px;
     border:4px solid gold;
     border-radius:50%;
     top:50%;
     left:50%;
     transform:translate(-50%, -50%);
-    box-shadow:0 0 20px gold;
+    box-shadow:0 0 25px gold;
     opacity:0;
-    animation:spin 6s linear infinite;
+    animation:spin 8s linear infinite;
 }
 
 @keyframes spin {
@@ -86,7 +92,7 @@ body {
     to { transform:translate(-50%, -50%) rotate(360deg); }
 }
 
-/* 🌟 particules limitées à l’arbre */
+/* 🌟 particules centrées */
 .particle {
     position:absolute;
     width:4px;
@@ -107,16 +113,17 @@ body {
 
 <div class="tree"></div>
 
+<!-- ✨ glow -->
 <div id="glowBruno" class="glow" style="left:22%; top:35%;"></div>
 <div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div>
-<div id="glowCenter" class="glow" style="left:50%; top:60%; transform:translateX(-50%);"></div>
+<div id="glowCenter" class="glow" style="left:50%; top:55%; transform:translateX(-50%);"></div>
 
 <!-- 📝 textes -->
-<div id="brunoTxt" class="label" style="left:20%; top:30%;">Bruno</div>
-<div id="aliciaTxt" class="label" style="right:20%; top:30%;">Alicia</div>
-<div id="nousTxt" class="label" style="left:50%; top:48%; transform:translateX(-50%);">Nous</div>
+<div class="label underline" style="left:18%; top:15%;">Bruno</div>
+<div class="label underline" style="right:18%; top:15%;">Alicia</div>
+<div id="nousTxt" class="label underline" style="left:50%; top:45%; transform:translateX(-50%); opacity:0;">Nous</div>
 
-<!-- 💍 anneau -->
+<!-- 💍 -->
 <div id="ring" class="ring"></div>
 
 <script>
@@ -155,14 +162,11 @@ function createCarousel(x,y,photos){
     return {div, interval};
 }
 
-// 🌟 particules limitées zone arbre
+// 🌟 particules centrées sur arbre
 setInterval(()=>{
     let p=document.createElement("div");
     p.className="particle";
-
-    // zone centrée (évite les bords)
     p.style.left = (window.innerWidth*0.3 + Math.random()*window.innerWidth*0.4) + "px";
-
     document.body.appendChild(p);
     setTimeout(()=>p.remove(),7000);
 },150);
@@ -172,13 +176,10 @@ setInterval(()=>{
 // Bruno
 setTimeout(()=>{
     glowBruno.style.opacity=1;
-    brunoTxt.style.opacity=1;
-
     let c = createCarousel(window.innerWidth*0.22, window.innerHeight*0.38, bruno);
 
     setTimeout(()=>{
         glowBruno.style.opacity=0;
-        brunoTxt.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
     },4000);
@@ -188,26 +189,28 @@ setTimeout(()=>{
 // Alicia
 setTimeout(()=>{
     glowAlicia.style.opacity=1;
-    aliciaTxt.style.opacity=1;
-
     let c = createCarousel(window.innerWidth*0.68, window.innerHeight*0.38, alicia);
 
     setTimeout(()=>{
         glowAlicia.style.opacity=0;
-        aliciaTxt.style.opacity=0;
         c.div.classList.add("hide");
         clearInterval(c.interval);
     },4000);
 
 },7000);
 
-// ❤️ couple
+// ❤️ couple centré coeur
 setTimeout(()=>{
     glowCenter.style.opacity=1;
     nousTxt.style.opacity=1;
     ring.style.opacity=1;
 
-    createCarousel(window.innerWidth*0.45, window.innerHeight*0.6, couple);
+    createCarousel(
+        window.innerWidth/2 - 70, 
+        window.innerHeight/2 - 70, 
+        couple
+    );
+
 },12000);
 
 </script>
