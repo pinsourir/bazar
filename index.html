@@ -68,14 +68,14 @@ body {
     padding-bottom:6px;
 }
 
-/* 💍 anneau */
+/* 💍 anneau (corrigé) */
 .ring {
     position:absolute;
     width:140px;
     height:140px;
     border:4px solid gold;
     border-radius:50%;
-    top:50%;
+    top:58%; /* 🔥 position ajustée dans le cœur */
     left:50%;
     transform:translate(-50%, -50%);
     box-shadow:0 0 30px gold;
@@ -128,7 +128,7 @@ body {
 
 <script>
 
-// 📸 PHOTOS (5 / 5 / 10)
+// 📸 PHOTOS
 const bruno = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
 const alicia = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
 const couple = [
@@ -165,7 +165,7 @@ function createCarousel(x,y,photos){
     return {div, interval, duration: photos.length * 3000};
 }
 
-// 🌟 particules (centrées sur arbre)
+// 🌟 particules
 setInterval(()=>{
     let p=document.createElement("div");
     p.className="particle";
@@ -202,7 +202,7 @@ setTimeout(()=>{
 
 }, 2000 + (bruno.length * 3000) + 2000);
 
-// ❤️ COUPLE (centré cœur)
+// ❤️ COUPLE
 setTimeout(()=>{
     glowCenter.style.opacity=1;
     nousTxt.style.opacity=1;
