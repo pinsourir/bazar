@@ -2,7 +2,10 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: radial-gradient(circle, #1a120b, #000);
+    /* --- CORRECTION CRUCIALE ICI --- */
+    background: #ffffff !important; /* Force le blanc pur */
+    background-color: #ffffff !important;
+    /* ------------------------------ */
     font-family: 'Segoe Script', cursive;
     height: 100vh;
     width: 100vw;
@@ -14,114 +17,93 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    background: white; /* Sécurité supplémentaire */
 }
 
 .tree-bg {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url("arbre.png") center bottom/contain no-repeat;
+    /* 'contain' pour voir tout l'arbre, centré */
+    background: url("arbre.png") center center / contain no-repeat;
     z-index: 0;
 }
 
-/* Positionnement des sections */
+/* Zone pour les photos (ajustée pour être au-dessus de l'arbre) */
+.inner-layout {
+    position: relative;
+    width: 100%;
+    max-width: 1000px; 
+    height: 100%;
+    z-index: 2;
+}
+
 .person-section {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 2;
 }
 
-.left { top: 10%; left: 10%; }
-.right { top: 10%; right: 10%; }
-.center { top: 50%; left: 50%; transform: translate(-50%, -40%); }
-
-/* Carrousel Responsive */
-.carousel {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 30px gold;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: 2s;
-    border: 2px solid gold;
+/* Bruno : en haut à gauche de l'arbre */
+.left { 
+    top: 15%; 
+    left: 5%; 
 }
 
-/* Ajustement taille pour mobile */
-@media (max-width: 600px) {
-    .carousel { width: 90px; height: 90px; }
-    .label { font-size: 24px !important; }
-    .left { left: 5%; }
-    .right { right: 5%; }
+/* Alicia : en haut à droite de l'arbre */
+.right { 
+    top: 15%; 
+    right: 5%; 
 }
 
-.carousel.show { opacity: 1; transform: scale(1); }
-.carousel.hide { opacity: 0; transform: scale(0.5); }
-
-.carousel img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: 1.5s;
+/* Couple : Dans le cœur */
+.center { 
+    top: 55%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
 }
 
-.carousel img.active { opacity: 1; }
+/* --- Style des éléments --- */
 
 .label {
     color: #ffd700;
-    font-size: 30px;
-    text-shadow: 0 0 10px gold;
-    margin-bottom: 10px;
+    font-size: 28px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Très légère ombre pour la lecture */
     white-space: nowrap;
 }
 
-.nous-label { opacity: 0; transition: 2s; }
+.carousel {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 20px gold;
+    border: 2px solid gold;
+    background: white;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: 2s;
+}
 
-/* Effets */
+.carousel.show { opacity: 1; transform: scale(1); }
+
 .glow {
     position: absolute;
     width: 180px;
     height: 180px;
-    background: radial-gradient(circle, rgba(255,215,0,0.6), transparent);
+    background: radial-gradient(circle, rgba(255,215,0,0.4), transparent);
     opacity: 0;
-    filter: blur(30px);
-    transition: opacity 2s;
-    pointer-events: none;
-}
-
-.ring {
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    border: 3px solid gold;
-    border-radius: 50%;
-    box-shadow: 0 0 20px gold;
-    opacity: 0;
+    filter: blur(25px);
     transition: 2s;
-    animation: spin 10s linear infinite;
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: gold;
-    border-radius: 50%;
-    animation: float 8s linear infinite;
-}
-
-@keyframes float {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
+/* --- Responsive Mobile --- */
+@media (max-width: 768px) {
+    .carousel { width: 80px; height: 80px; }
+    .label { font-size: 18px; }
+    .left { top: 20%; left: 2%; }
+    .right { top: 20%; right: 2%; }
 }
