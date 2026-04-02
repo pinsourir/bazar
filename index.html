@@ -1,29 +1,36 @@
- <!DOCTYPE html> 
- <html lang="fr"> 
- <head> 
- <meta charset="UTF-8"> 
- <link rel="stylesheet" href="style.css">
- </head> 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Arbre</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
- <body> 
+    <div class="tree-container">
+        <div class="tree-bg"></div>
 
- <div class="tree"></div> 
+        <div id="section-bruno" class="person-section left">
+            <div class="label">Bruno</div>
+            <div id="glowBruno" class="glow"></div>
+            <div id="carousel-bruno" class="carousel-placeholder"></div>
+        </div>
 
- <!-- ✨ glow --> 
- <div id="glowBruno" class="glow" style="left:22%; top:35%;"></div> 
- <div id="glowAlicia" class="glow" style="right:22%; top:35%;"></div> 
- <div id="glowCenter" class="glow" style="left:50%; top:52%; transform:translateX(-50%);"></div> 
- <!-- 📝 textes --> 
- <div class="label" style="left:18%; top:10%;">Bruno</div> 
- <div class="label" style="right:18%; top:10%;">Alicia</div> 
- <div id="nousTxt" class="label" style="left:50%; top:28%; transform:translateX(-50%); opacity:0;"> 
-     Nous 
- </div> 
+        <div id="section-alicia" class="person-section right">
+            <div class="label">Alicia</div>
+            <div id="glowAlicia" class="glow"></div>
+            <div id="carousel-alicia" class="carousel-placeholder"></div>
+        </div>
 
- <!-- 💍 anneau --> 
- <div id="ring" class="ring"></div> 
- <script src="script.js"></script>
- </body> 
- </html> 
+        <div id="section-couple" class="person-section center">
+            <div id="nousTxt" class="label nous-label">Nous</div>
+            <div id="glowCenter" class="glow"></div>
+            <div id="ring" class="ring"></div>
+            <div id="carousel-couple" class="carousel-placeholder"></div>
+        </div>
+    </div>
 
-
+    <script src="script.js"></script>
+</body>
+</html>
