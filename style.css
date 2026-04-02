@@ -492,7 +492,7 @@ footer {
     position: relative;
     width: 100%;
     /* 80vh = l'arbre prend 80% de la hauteur de l'écran */
-    height: 90vh; 
+    height: 20vh; 
     /* Ces 3 lignes permettent de centrer l'arbre horizontalement et verticalement */
     display: flex;
     justify-content: center;
