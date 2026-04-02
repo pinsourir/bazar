@@ -1,151 +1,293 @@
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: white; /* Fond blanc pour fusionner avec l'image */
+
+
+    margin:0;
+
+
+    overflow:hidden;
+
+
+    background: radial-gradient(circle, #1a120b, #000);
+
+
     font-family: 'Segoe Script', cursive;
-    height: 100vh;
-    width: 100vw;
+
+
 }
 
-.tree-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+
+
+
+/* 🌳 arbre */
+
+
+.tree {
+
+
+    position:absolute;
+
+
+    width:100%;
+
+
+    height:100%;
+
+
+    background:url("arbre.png") center/contain no-repeat;
+
+
 }
 
-.tree-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* 'contain' pour voir tout l'arbre, centré en bas */
-    background: url("arbre.png") center bottom / contain no-repeat;
-    z-index: 0;
+
+
+
+/* ✨ glow */
+
+
+.glow {
+
+
+    position:absolute;
+
+
+    width:260px;
+
+
+    height:260px;
+
+
+    border-radius:50%;
+
+
+    background: radial-gradient(circle, rgba(255,215,0,0.9), transparent);
+
+
+    opacity:0;
+
+
+    filter: blur(35px);
+
+
+    transition: opacity 2s;
+
+
 }
 
-/* Zone invisible qui suit la forme de l'arbre pour placer les photos */
-.inner-layout {
-    position: relative;
-    width: 100%;
-    max-width: 1200px; 
-    height: 90vh; /* On occupe presque toute la hauteur */
-    z-index: 2;
-}
 
-.person-section {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 3;
-}
 
-/* Positions fixes sur les branches (à ajuster selon ton image) */
-.left { 
-    top: 20%; 
-    left: 15%; 
-}
-.right { 
-    top: 20%; 
-    right: 15%; 
-}
-.center { 
-    top: 55%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-}
 
-/* --- Éléments visuels --- */
+/* 📸 carrousel */
+
 
 .carousel {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(184, 134, 11, 0.5);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: 2s;
-    border: 3px solid #b8860b;
-    background: white;
+
+
+    position:absolute;
+
+
+    width:150px;
+
+
+    height:150px;
+
+
+    border-radius:50%;
+
+
+    overflow:hidden;
+
+
+    box-shadow:0 0 40px gold;
+
+
+    opacity:0;
+
+
+    transform:scale(0.5);
+
+
+    transition:2s;
+
+
 }
 
-.carousel.show { opacity: 1; transform: scale(1); }
-.carousel.hide { opacity: 0; transform: scale(0.5); }
+
+
+
+.carousel.show { opacity:1; transform:scale(1); }
+
+
+.carousel.hide { opacity:0; transform:scale(0.5); }
+
+
+
 
 .carousel img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: 1.5s;
+
+
+    position:absolute;
+
+
+    width:100%;
+
+
+    height:100%;
+
+
+    object-fit:cover;
+
+
+    opacity:0;
+
+
+    transition:1.5s;
+
+
 }
-.carousel img.active { opacity: 1; }
+
+
+
+
+.carousel img.active { opacity:1; }
+
+
+
+
+/* 📝 textes */
+
 
 .label {
-    color: #b8860b; /* Doré sombre pour lisibilité sur blanc */
-    font-size: 28px;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
-    margin-bottom: 10px;
-    white-space: nowrap;
+
+
+    position:absolute;
+
+
+    color:#ffd700;
+
+
+    font-size:34px;
+
+
+    text-shadow:0 0 12px gold;
+
+
+    border-bottom:2px solid gold;
+
+
+    padding-bottom:6px;
+
+
 }
 
-.nous-label { opacity: 0; transition: 2s; }
 
-/* --- Responsive Mobile --- */
-@media (max-width: 768px) {
-    .inner-layout { height: 70vh; } /* Plus court sur mobile */
-    .carousel { width: 90px; height: 90px; }
-    .label { font-size: 20px; }
-    .left { left: 5%; top: 25%; }
-    .right { right: 5%; top: 25%; }
-    .center { top: 60%; }
-}
 
-/* --- Animations --- */
-.glow {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255,215,0,0.4), transparent);
-    opacity: 0;
-    filter: blur(30px);
-    transition: opacity 2s;
-    pointer-events: none;
-}
+
+
+/* 💍 anneau */
+
+
+
+/* 💍 anneau (corrigé) */
+
 
 .ring {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border: 2px solid #b8860b;
-    border-radius: 50%;
-    opacity: 0;
-    transition: 2s;
-    animation: spin 15s linear infinite;
+
+
+    position:absolute;
+
+
+    width:140px;
+
+
+    height:140px;
+
+
+    border:4px solid gold;
+
+
+    border-radius:50%;
+
+
+
+    top:50%;
+
+
+
+    top:58%; /* 🔥 position ajustée dans le cœur */
+
+
+    left:50%;
+
+
+    transform:translate(-50%, -50%);
+
+
+    box-shadow:0 0 30px gold;
+
+
+    opacity:0;
+
+
+    animation:spin 10s linear infinite;
+
+
 }
+
+
+
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+
+
+    from { transform:translate(-50%, -50%) rotate(0deg); }
+
+
+    to { transform:translate(-50%, -50%) rotate(360deg); }
+
+
 }
+
+
+
+
+/* 🌟 particules */
+
 
 .particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #ffd700;
-    border-radius: 50%;
-    animation: float 8s linear infinite;
+
+
+    position:absolute;
+
+
+    width:4px;
+
+
+    height:4px;
+
+
+    background:gold;
+
+
+    border-radius:50%;
+
+
+    animation:float 8s linear infinite;
+
+
 }
 
+
+
+
 @keyframes float {
-    from { transform: translateY(105vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
+
+
+    from { transform: translateY(80vh); }
+
+
+    to { transform: translateY(10vh); opacity:0; }
+
+
 }
+
+
