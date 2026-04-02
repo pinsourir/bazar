@@ -10,17 +10,60 @@ body {
 
 .tree-container {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Ce conteneur servira de guide pour placer les noms SUR l'arbre */
+.inner-layout {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* On limite la largeur pour que ça reste harmonieux sur grand écran */
+    height: 100%;
+    z-index: 2;
+}
+
+.person-section {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Positionnement ajusté pour rester sur les branches */
+.left { 
+    top: 15%; 
+    left: 15%; 
+}
+.right { 
+    top: 15%; 
+    right: 15%; 
+}
+.center { 
+    top: 60%; /* Ajusté pour tomber dans le cœur du tronc */
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+/* Ajustements Spéciaux Mobile */
+@media (max-width: 768px) {
+    .left { left: 5%; top: 20%; }
+    .right { right: 5%; top: 20%; }
+    .center { top: 65%; }
+    .label { font-size: 22px; }
 }
 
 .tree-bg {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url("arbre.png") center bottom/contain no-repeat;
+    /* On utilise 'cover' pour remplir tout l'espace */
+    /* On centre horizontalement et on colle en bas (bottom) */
+    background: url("arbre.png") center bottom / cover no-repeat;
     z-index: 0;
 }
 
