@@ -93,60 +93,111 @@ function moveSlide(direction) {
 /*-------------------------------------------------
                     ARBRE
 --------------------------------------------------*/
-// --- LOGIQUE DE L'ARBRE GÉNÉALOGIQUE ---
-const brunoPhotos = ["b1.jpg","b2.jpg","b3.jpg"]; // Tes photos
-const aliciaPhotos = ["a1.jpg","a2.jpg","a3.jpg"];
-const couplePhotos = ["c1.jpg","c2.jpg","c3.jpg"];
+// --- CONFIGURATION DES PHOTOS ---
+const photosData = {
+    bruno: ["b1.jpg", "b2.jpg", "b3.jpg"],
+    alicia: ["a1.jpg", "a2.jpg", "a3.jpg"],
+    couple: ["c1.jpg", "c2.jpg", "c3.jpg"]
+};
 
-function initTreeCarousel(containerId, photos) {
-    const container = document.getElementById(containerId);
-    photos.forEach((p, i) => {
-        let img = document.createElement("img");
-        img.src = p;
-        if (i === 0) img.classList.add("active");
-        container.appendChild(img);
+let activeIntervals = []; // Stocke les intervalles pour pouvoir les arrêter
+
+// --- FONCTION POUR GÉNÉRER LES IMAGES ---
+function prepareCarousels() {
+    Object.keys(photosData).forEach(key => {
+        const container = document.getElementById(`carousel-${key === 'couple' ? 'couple' : key}`);
+        container.innerHTML = ""; // Vide le contenu actuel
+        photosData[key].forEach((src, index) => {
+            const img = document.createElement("img");
+            img.src = src;
+            if (index === 0) img.classList.add("active");
+            container.appendChild(img);
+        });
     });
+}
 
-    container.classList.add("show");
-    let i = 0;
+// --- FONCTION DE RÉINITIALISATION ---
+function resetAnimation() {
+    // Arrêter tous les carrousels en cours
+    activeIntervals.forEach(clearInterval);
+    activeIntervals = [];
+
+    // Cacher tous les éléments
+    const elements = [
+        'glowBruno', 'glowAlicia', 'glowCenter', 
+        'carousel-bruno', 'carousel-alicia', 'carousel-couple',
+        'nousTxt', 'ring'
+    ];
+    elements.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) {
+            el.style.opacity = "0";
+            el.classList.remove('show');
+        }
+    });
+}
+
+// --- FONCTION DE LANCEMENT DE L'ANIMATION ---
+function startTreeAnimation() {
+    resetAnimation();
+    prepareCarousels();
+
+    // Apparition Bruno (après 0.5s)
+    setTimeout(() => {
+        document.getElementById('glowBruno').style.opacity = "1";
+        const container = document.getElementById('carousel-bruno');
+        container.classList.add('show');
+        activeIntervals.push(startRotation(container));
+    }, 500);
+
+    // Apparition Alicia (après 3.5s)
+    setTimeout(() => {
+        document.getElementById('glowAlicia').style.opacity = "1";
+        const container = document.getElementById('carousel-alicia');
+        container.classList.add('show');
+        activeIntervals.push(startRotation(container));
+    }, 3500);
+
+    // Apparition Couple (après 6.5s)
+    setTimeout(() => {
+        document.getElementById('glowCenter').style.opacity = "1";
+        document.getElementById('nousTxt').style.opacity = "1";
+        document.getElementById('ring').style.opacity = "1";
+        const container = document.getElementById('carousel-couple');
+        container.classList.add('show');
+        activeIntervals.push(startRotation(container));
+    }, 6500);
+}
+
+// Fonction pour faire tourner les images
+function startRotation(container) {
+    let current = 0;
+    const imgs = container.querySelectorAll('img');
     return setInterval(() => {
-        let imgs = container.querySelectorAll("img");
-        imgs[i].classList.remove("active");
-        i = (i + 1) % imgs.length;
-        imgs[i].classList.add("active");
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
     }, 3000);
 }
 
-// Lancement automatique au scroll
+// --- DÉTECTION DU SCROLL (Observer) ---
+const treeSection = document.querySelector('#arbre-magique');
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             startTreeAnimation();
-            observer.unobserve(entry.target);
+            // On peut choisir de ne le lancer qu'une fois au scroll :
+            // observer.unobserve(treeSection); 
         }
     });
-}, { threshold: 0.5 });
+}, { threshold: 0.6 }); // Se lance quand 60% de la section est visible
 
-observer.observe(document.querySelector('#arbre-magique'));
+observer.observe(treeSection);
 
-function startTreeAnimation() {
-    // Étape 1 : Bruno
-    setTimeout(() => {
-        document.getElementById('glowBruno').style.opacity = 1;
-        initTreeCarousel('carousel-bruno', brunoPhotos);
-    }, 1000);
-
-    // Étape 2 : Alicia
-    setTimeout(() => {
-        document.getElementById('glowAlicia').style.opacity = 1;
-        initTreeCarousel('carousel-alicia', aliciaPhotos);
-    }, 4000);
-
-    // Étape 3 : Le Couple
-    setTimeout(() => {
-        document.getElementById('glowCenter').style.opacity = 1;
-        document.getElementById('nousTxt').style.opacity = 1;
-        document.getElementById('ring').style.opacity = 1;
-        initTreeCarousel('carousel-couple', couplePhotos);
-    }, 8000);
+// --- BOUTON RELANCER ---
+document.getElementById('btn-replay').addEventListener('click', () => {
+    // Petit effet de scroll fluide pour remonter au titre de l'arbre avant de relancer
+    treeSection.scrollIntoView({ behavior: 'smooth' });
+    startTreeAnimation();
+});
 }
