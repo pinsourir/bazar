@@ -1,0 +1,98 @@
+body {
+    margin:0;
+    overflow:hidden;
+    background: radial-gradient(circle, #1a120b, #000);
+    font-family: 'Segoe Script', cursive;
+}
+
+/* 🌳 arbre */
+.tree {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:url("arbre.png") center/contain no-repeat;
+}
+
+/* ✨ glow */
+.glow {
+    position:absolute;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,215,0,0.9), transparent);
+    opacity:0;
+    filter: blur(35px);
+    transition: opacity 2s;
+}
+
+/* 📸 carrousel */
+.carousel {
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    overflow:hidden;
+    box-shadow:0 0 40px gold;
+    opacity:0;
+    transform:scale(0.5);
+    transition:2s;
+}
+
+.carousel.show { opacity:1; transform:scale(1); }
+.carousel.hide { opacity:0; transform:scale(0.5); }
+
+.carousel img {
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:1.5s;
+}
+
+.carousel img.active { opacity:1; }
+
+/* 📝 textes */
+.label {
+    position:absolute;
+    color:#ffd700;
+    font-size:34px;
+    text-shadow:0 0 12px gold;
+    border-bottom:2px solid gold;
+    padding-bottom:6px;
+}
+
+/* 💍 anneau (corrigé) */
+.ring {
+    position:absolute;
+    width:140px;
+    height:140px;
+    border:4px solid gold;
+    border-radius:50%;
+    top:58%; /* 🔥 position ajustée dans le cœur */
+    left:50%;
+    transform:translate(-50%, -50%);
+    box-shadow:0 0 30px gold;
+    opacity:0;
+    animation:spin 10s linear infinite;
+}
+
+@keyframes spin {
+    from { transform:translate(-50%, -50%) rotate(0deg); }
+    to { transform:translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 🌟 particules */
+.particle {
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:gold;
+    border-radius:50%;
+    animation:float 8s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(80vh); }
+    to { transform: translateY(10vh); opacity:0; }
+}
