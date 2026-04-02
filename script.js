@@ -1,87 +1,77 @@
-// 📸 PHOTOS
-const bruno = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
-const alicia = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
-const couple = [
-"c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg",
-"c6.jpg","c7.jpg","c8.jpg","c9.jpg","c10.jpg"
-];
+const brunoPhotos = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
+const aliciaPhotos = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
+const couplePhotos = ["c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg","c6.jpg","c7.jpg"];
 
-// 🎞️ carrousel
-function createCarousel(x,y,photos){
-    let div=document.createElement("div");
-    div.className="carousel";
-    div.style.left=x+"px";
-    div.style.top=y+"px";
+function createCarousel(containerId, photos) {
+    const container = document.getElementById(containerId);
+    let div = document.createElement("div");
+    div.className = "carousel";
 
-    photos.forEach((p,i)=>{
-        let img=document.createElement("img");
-        img.src=p;
-        if(i===0) img.classList.add("active");
+    photos.forEach((p, i) => {
+        let img = document.createElement("img");
+        img.src = p;
+        if (i === 0) img.classList.add("active");
         div.appendChild(img);
     });
 
-    document.body.appendChild(div);
+    container.appendChild(div);
+    setTimeout(() => div.classList.add("show"), 100);
 
-    setTimeout(()=>div.classList.add("show"),100);
+    let i = 0;
+    let interval = setInterval(() => {
+        let imgs = div.querySelectorAll("img");
+        if(imgs.length > 0) {
+            imgs[i].classList.remove("active");
+            i = (i + 1) % imgs.length;
+            imgs[i].classList.add("active");
+        }
+    }, 3000);
 
-    let i=0;
-    let interval = setInterval(()=>{
-        let imgs=div.querySelectorAll("img");
-        imgs[i].classList.remove("active");
-        i=(i+1)%imgs.length;
-        imgs[i].classList.add("active");
-    },3000);
-
-    return {div, interval, duration: photos.length * 3000};
+    return { div, interval, duration: photos.length * 3000 };
 }
 
-// 🌟 particules
-setInterval(()=>{
-    let p=document.createElement("div");
-    p.className="particle";
-    p.style.left = (window.innerWidth*0.3 + Math.random()*window.innerWidth*0.4) + "px";
+// Particules
+setInterval(() => {
+    let p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(p);
-    setTimeout(()=>p.remove(),8000);
-},200);
+    setTimeout(() => p.remove(), 8000);
+}, 3000);
 
-// 🎬 TIMELINE
+// Séquence d'animation
+const delay = 2000;
 
-// Bruno
-setTimeout(()=>{
-    glowBruno.style.opacity=1;
-    let c = createCarousel(window.innerWidth*0.22, window.innerHeight*0.38, bruno);
-
-    setTimeout(()=>{
-        glowBruno.style.opacity=0;
-        c.div.classList.add("hide");
+// 1. Bruno
+setTimeout(() => {
+    document.getElementById('glowBruno').style.opacity = 1;
+    let c = createCarousel('carousel-bruno', brunoPhotos);
+    
+    setTimeout(() => {
+        document.getElementById('glowBruno').style.opacity = 0;
+        c.div.classList.replace("show", "hide");
         clearInterval(c.interval);
     }, c.duration);
+}, delay);
 
-},2000);
+// 2. Alicia (se lance après Bruno)
+const aliciaStart = delay + (brunoPhotos.length * 3000) + 1000;
+setTimeout(() => {
+    document.getElementById('glowAlicia').style.opacity = 1;
+    let c = createCarousel('carousel-alicia', aliciaPhotos);
 
-// Alicia
-setTimeout(()=>{
-    glowAlicia.style.opacity=1;
-    let c = createCarousel(window.innerWidth*0.68, window.innerHeight*0.38, alicia);
-
-    setTimeout(()=>{
-        glowAlicia.style.opacity=0;
-        c.div.classList.add("hide");
+    setTimeout(() => {
+        document.getElementById('glowAlicia').style.opacity = 0;
+        c.div.classList.replace("show", "hide");
         clearInterval(c.interval);
     }, c.duration);
+}, aliciaStart);
 
-}, 2000 + (bruno.length * 3000) + 2000);
-
-// ❤️ COUPLE
-setTimeout(()=>{
-    glowCenter.style.opacity=1;
-    nousTxt.style.opacity=1;
-    ring.style.opacity=1;
-
-    createCarousel(
-        window.innerWidth/2 - 75,
-        window.innerHeight/2 - 75,
-        couple
-    );
-
-}, 2000 + (bruno.length * 3000) + (alicia.length * 3000) + 4000);
+// 3. Couple
+const coupleStart = aliciaStart + (aliciaPhotos.length * 3000) + 1000;
+setTimeout(() => {
+    document.getElementById('glowCenter').style.opacity = 1;
+    document.getElementById('nousTxt').style.opacity = 1;
+    document.getElementById('ring').style.opacity = 1;
+    createCarousel('carousel-couple', couplePhotos);
+}, coupleStart);
