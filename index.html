@@ -1,36 +1,516 @@
+
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notre Arbre</title>
+
+    <title>Mariage - Alicia & Bruno</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-    <div class="tree-container">
-        <div class="tree-bg"></div>
+<!-- ===== BANDEAU NAVIGATION ===== --> 
 
-        <div id="section-bruno" class="person-section left">
-            <div class="label">Bruno</div>
-            <div id="glowBruno" class="glow"></div>
-            <div id="carousel-bruno" class="carousel-placeholder"></div>
-        </div>
+<nav class="navbar">
 
-        <div id="section-alicia" class="person-section right">
-            <div class="label">Alicia</div>
-            <div id="glowAlicia" class="glow"></div>
-            <div id="carousel-alicia" class="carousel-placeholder"></div>
-        </div>
+    <a href="#accueil" class="navbar-logo">
 
-        <div id="section-couple" class="person-section center">
-            <div id="nousTxt" class="label nous-label">Nous</div>
-            <div id="glowCenter" class="glow"></div>
-            <div id="ring" class="ring"></div>
-            <div id="carousel-couple" class="carousel-placeholder"></div>
-        </div>
+        <img src="image/logo.png" alt="Logo AB entrelacé - Alicia & Bruno">
+
+    </a>
+
+    <div class="hamburger" id="hamburger">
+
+        ☰
+
     </div>
 
-    <script src="script.js"></script>
+
+    <ul class="nav-links" id="nav-links">
+
+        <li><a href="#Date">Date</a></li>
+
+        <li><a href="#histoire">Notre histoire</a></li>
+
+        <li><a href="#programme">Déroulement</a></li>
+
+        <li><a href="#lieux">Lieux</a></li>
+
+        <li><a href="#infos">Infos</a></li>
+
+        <li><a href="#menu">Menu</a></li>
+
+        <li><a href="#galerie">Galerie</a></li>
+
+    </ul>
+
+</nav>
+
+
+
+<!-- ===== 1. PAGE D’ACCUEIL ===== -->
+
+<header id="accueil" class="hero">
+
+    <div class="overlay">
+
+        <h1>Alicia & Bruno</h1>
+
+        <p class="subtitle">Invitation</p>
+
+        <p class="date">26 Août 2027</p>
+
+        <p class="tagline">Une journée unique pour célébrer notre amour</p>
+
+
+        <!-- Boutons navigation interne -->
+
+        <div class="hero-buttons">
+
+            <a href="#lieux" class="btn">Lieu</a>
+
+            <a href="#infos" class="btn">Info</a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ===== COMPTE À REBOURS LUXE ===== -->
+
+<section id="Date" class="countdown-luxe">
+
+    <h2 class="countdown-title">26 Août 2027</h2>
+
+    <p class="countdown-subtitle">Nous avons hâte de célébrer ce moment avec vous</p>
+
+
+    <div id="countdown" class="countdown-container">
+
+        <div class="time-box">
+
+            <span id="days">00</span>
+
+            <small>Jours</small>
+
+        </div>
+
+        <div class="time-box">
+
+            <span id="hours">00</span>
+
+            <small>Heures</small>
+
+        </div>
+
+        <div class="time-box">
+
+            <span id="minutes">00</span>
+
+            <small>Minutes</small>
+
+        </div>
+
+        <div class="time-box">
+
+            <span id="seconds">00</span>
+
+            <small>Secondes</small>
+
+        </div>
+
+    </div>
+
+</section>
+
+    
+
+<!-- ===== 2. NOTRE HISTOIRE ===== -->
+
+<section id="histoire" class="section-white">
+
+    <h2 class="countdown-title">Notre histoire</h2>
+
+    <p class="countdown-subtitle">On a fait plein plein de truc!!!😌<br> Enfaite là on est fiancer! Et avant ca, on c'est rencontrer au lycée. ET JUSTE avant y'a eu ... ? la revolution 🤔... Le crois que je suis aller trop loin😅!!</p>
+
+    
+
+    <div class="tree-container">
+
+        <div class="tree-bg"></div>
+
+
+        <div id="section-bruno" class="person-section left">
+
+            <div class="label">Bruno</div>
+
+            <div id="glowBruno" class="glow"></div>
+
+            <div id="carousel-bruno" class="carousel-placeholder"></div>
+
+        </div>
+
+
+        <div id="section-alicia" class="person-section right">
+
+            <div class="label">Alicia</div>
+
+            <div id="glowAlicia" class="glow"></div>
+
+            <div id="carousel-alicia" class="carousel-placeholder"></div>
+
+        </div>
+
+
+        <div id="section-couple" class="person-section center">
+
+            <div id="nousTxt" class="label nous-label">Nous</div>
+
+            <div id="glowCenter" class="glow"></div>
+
+            <div id="ring" class="ring"></div>
+
+            <div id="carousel-couple" class="carousel-placeholder"></div>
+
+        </div>
+
+    </div>
+
+
+<div class="gallery">
+
+        <img src="image/eux1.jpg" alt="Photo d'eux 1">
+
+        <img src="https://www.ville-saintgratien.fr/medias/2021/04/lycee-monod-scaled.jpg" alt="Photo d'eux 2">
+
+        <img src="https://www.civitatis.com/f/francia/paris/guia/historia.jpg" alt="Photo d'eux 3">
+
+    </div>
+
+</section>
+
+
+<!-- ===== 3. PROGRAMME (TIMELINE VERTICALE) ===== -->
+
+<section id="programme" class="section-purple">
+
+    <h2 class="countdown-title">Programme du mariage</h2>
+
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <h3>Mairie</h3>
+
+            <p class="texte">14h00</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Cérémonie</h3>
+
+            <p class="texte">15h30</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Arrivée au domaine</h3>
+
+            <p class="texte">17h00</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Cocktail</h3>
+
+            <p class="texte">17h30</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Dîner</h3>
+
+            <p class="texte">19h30 – Repas assis, thème champêtre chic ou alors dinosaure🦖</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Ouverture du bal (en mode Cendrillon)</h3>
+
+            <p class="texte">22h30</p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>Fin de soirée</h3>
+
+            <p class="texte">23h59 (Cendrillon jusqu'au bout)✨</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===== 4. LES LIEUX ===== -->
+
+<section id="lieux" class="section-white">
+
+    <h2 class="countdown-title">Les lieux</h2>
+
+    <h3>Le domaine des 3 voyages</h3>
+
+
+    <!-- photos des lieux -->
+
+    <div class="gallery">
+
+        <img src="https://www.ville-domont.fr/var/www/storage/images/mediatheque/ville-de-domont/images/agenda/tuile-agenda-eglise/32654-1-fre-FR/TUILE-AGENDA-Eglise.jpg" alt="Photo lieu 1">
+
+        <img src="https://www.ville-domont.fr/var/www/storage/images/mediatheque/ville-de-domont/images/agenda/mairie-domont-fermeture-services-municipaux-site/15067-1-fre-FR/Mairie-Domont-fermeture-services-municipaux-site.jpg" alt="Photo lieu 2">
+
+        <img src="https://image.bridebook.com/weddingsuppliers/venue/frBXrBx9XZ/b45f611f-cd4c-407c-b124-66034f98b923.jpg/dpr=2,fit=cover,g=face,w=460,h=310" alt="Photo lieu 3">
+
+    </div>
+
+
+
+    <p class="texte"><strong>Adresse :</strong> domaine des 3 voyages, 7 Rue de Pacy, 27640 Merey</p>
+
+
+    <!-- Google Maps intégré (remplacer l’adresse) -->
+
+   
+
+
+    <iframe 
+
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d335288.24231016746!2d0.7979679107665939!3d48.96415967667269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6b4bb0d9fd9bd%3A0xb11c1e3f29302a31!2sdomaine%20des%203%20voyages!5e0!3m2!1sfr!2sfr!4v1772550130853!5m2!1sfr!2sfr"
+
+        width="100%" 
+
+        height="400" 
+
+        style="border:0;"
+
+        loading="lazy">
+
+    </iframe>
+
+    
+
+    <p class="texte">Conseils d’accès : parking disponible sur place.</p>
+
+</section>
+
+
+<!-- ===== 5. INFORMATIONS PRATIQUES ===== -->
+
+<section id="infos" class="section-purple">
+
+    <h2 class="countdown-title"> Informations pratiques</h2>
+
+    <p class="subtitles">Hébergements possible sur place, parkings, contact témoin, météo probable…🙏🏻🤞🏻</p>
+
+
+    <h3>FAQ</h3>
+
+
+    <p><strong>Quelle est le thème ?</strong></p>
+
+    <p class="countdown-subtitle">Jardin d'été.</p>
+
+        <div class="color-palette">
+
+            <p>Palette suggérée (ATTENTION pas de blanc SVP) :</p>
+
+            <div class="swatches">
+
+                <div class="swatch color-1"></div>
+
+                <div class="swatch color-2"></div>
+
+                <div class="swatch color-3"></div>
+
+                <div class="swatch color-4"></div>
+
+                <div class="swatch color-5"></div>
+
+            </div>
+
+        </div>
+
+
+    <p><strong>Y a-t-il un parking ?</strong></p>
+
+    <p class="subtitles">Oui.</p>
+
+
+    <p><strong>À quelle heure se termine la soirée ?</strong></p>
+
+    <p class="subtitles">23h59… Cendrillon oblige.</p>
+
+</section>
+
+
+<!-- ===== 6. MENU ===== -->
+
+<section id="menu" class="section-white">
+
+    <h2 class="countdown-title">Le Menu</h2>
+
+
+    <div class="menu-details">
+
+        <h3>Entrée :</h3>
+
+        <p class="countdown-subtitle">Le Bouquet de Vergers en Julienne de l'Oncle Sam Fines bâtonnets de tubercules sélectionnés,<br> 
+
+            plongés dans un bain d'huile végétale pressée à chaud, sublimés par une pluie de cristaux de mer des Salins.<br> 
+
+            Accompagnés de leur émulsion de tomates de Provence au sucre de canne et d'un velouté d’œufs monté à l’huile de colza et pointe de moutarde.<br>
+
+            </p>
+
+        <h3>Plat :</h3>
+
+        <p class="countdown-subtitle">La Trilogie de Bœuf Charolais sous son Écrin de Froment au Sésame Double médaillon de bœuf haché,<br> 
+
+            saisi à la plancha, déposé sur un lit de laitue ciselée et de cornichons croquants de l'Appenzell.<br> 
+
+            Le tout est lié par une sauce secrète aux aromates ancestraux et nappé d'une fine tranche de cheddar affiné,<br> 
+
+            niché entre deux disques de pain brioché aux graines de sésame torréfiées.<br></p>
+
+            
+
+        <h3>Dessert :</h3>
+
+        <p class="countdown-subtitle">La Caresse de Givre Lacté et son Coulis de Cacao Intense Crème glacée onctueuse élaborée à partir de lait frais de pâturages,<br> 
+
+            fouettée pour une légèreté aérienne, agrémentée de brisures de biscuits sablés au chocolat noir et nappée d’un nappage onctueux au cacao pur beurre de karité.<br></p>
+
+            
+
+         <h3>Le Conseil du Sommelier :</h3>
+
+         <p class="countdown-subtitle">La Cuvée Pétillante de l'Atlantique, robe ambrée et bulles de caramel.<br></p>
+
+        
+
+    </div>
+
+</section>
+
+    
+
+<!-- ===== 7. CONFIRMATION DE PRÉSENCE (GOOGLE FORM) ===== -->
+
+<section class="rsvp">
+
+    <h2 class="countdown-title">Confirmation de présence</h2>
+
+    <p class="countdown-subtitle">Merci de respecter le nombre de personnes indiqué sur votre invitation.</p>
+
+
+    <!-- Google Form intégré -->
+
+    <iframe 
+
+        src="https://forms.gle/u1KdwEesiRUDNqQv5"
+
+        width="100%" 
+
+        height="900"
+
+        frameborder="0">
+
+    </iframe>
+
+</section>
+
+
+<!-- ===== 8. GALERIE PHOTOS ===== -->
+
+<section id="galerie" class="section-white">
+
+    <h2 class="countdown-title">Galerie photos</h2>
+
+        <div class="carousel-wrapper">
+
+        <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+
+        
+
+        <div class="carousel-container" id="carousel">
+
+            <div class="carousel-slide">
+
+                <img src="images/photo1.jpg" alt="Préparation 1">
+
+                <img src="images/photo2.jpg" alt="Préparation 2">
+
+                <img src="images/photo3.jpg" alt="Préparation 3">
+
+            </div>
+
+        </div>
+
+
+        <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+
+    </div>
+
+
+    <!-- Bouton futur téléchargement -->
+
+    <!--ou alors au lieu d'un zip je fait un GG drive-->
+
+    <a href="photos-mariage.zip" class="btn">Télécharger les photos (après le mariage, parce que pendant je serai en train de manger😂)</a>
+
+</section>
+
+<footer>
+
+    <p>© 2027 Alicia & Bruno</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
 </body>
+
 </html>
