@@ -84,8 +84,8 @@
     </div>
 </section>
 
-<section id="arbre-magique" class="section-white" style="height: 100vh; position: relative; overflow: hidden;">
-    <h2 class="countdown-title">Nos Racines</h2>
+<section id="arbre-magique" class="section-white" style="min-height: 110vh; position: relative; overflow: hidden;">
+    <h2 id="titre-racines" class="countdown-title">Nos Racines</h2>
     
     <div class="tree-container">
         <div class="tree-bg"></div>
@@ -103,12 +103,16 @@
             </div>
 
             <div id="section-couple" class="person-section center">
-                <div id="nousTxt" class="label nous-label">Nous</div>
+                <div id="nousTxt" class="label" style="opacity:0; transition: 2s;">Nous</div>
                 <div id="glowCenter" class="glow"></div>
                 <div id="ring" class="ring"></div>
                 <div id="carousel-couple" class="carousel-placeholder"></div>
             </div>
         </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px; position: relative; z-index: 10;">
+        <button id="btn-replay" class="btn">Relancer l'histoire ✨</button>
     </div>
 </section>
 
