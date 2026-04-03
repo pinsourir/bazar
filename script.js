@@ -90,73 +90,108 @@ function moveSlide(direction) {
 }
 
 
+
 /*-------------------------------------------------
-                    ARBRE
+                  LOGIQUE DE L'ARBRE
 --------------------------------------------------*/
-const brunoPhotos = ["b1.jpg","b2.jpg","b3.jpg","b4.jpg","b5.jpg"];
-const aliciaPhotos = ["a1.jpg","a2.jpg","a3.jpg","a4.jpg","a5.jpg"];
-const couplePhotos = ["c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg","c6.jpg","c7.jpg"];
+const photosData = {
+    bruno: ["b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg"],
+    alicia: ["a1.jpg", "a2.jpg", "a3.jpg", "a4.jpg", "a5.jpg"],
+    couple: ["c1.jpg", "c2.jpg", "c3.jpg", "c4.jpg", "c5.jpg", "c6.jpg", "c7.jpg"]
+};
 
-function createCarousel(containerId, photos) {
-    const container = document.getElementById(containerId);
-    let div = document.createElement("div");
-    div.className = "carousel";
+let activeIntervals = [];
 
-    photos.forEach((p, i) => {
-        let img = document.createElement("img");
-        img.src = p;
-        if (i === 0) img.classList.add("active");
-        div.appendChild(img);
+// 1. Prépare les images dans les cercles
+function prepareCarousels() {
+    Object.keys(photosData).forEach(key => {
+        const container = document.getElementById(`carousel-${key}`);
+        if (!container) return;
+        
+        container.innerHTML = ""; // Vide le cercle
+        photosData[key].forEach((src, index) => {
+            const img = document.createElement("img");
+            img.src = src;
+            if (index === 0) img.classList.add("active");
+            container.appendChild(img);
+        });
     });
-
-    container.appendChild(div);
-    setTimeout(() => div.classList.add("show"), 100);
-
-    let i = 0;
-    let interval = setInterval(() => {
-        let imgs = div.querySelectorAll("img");
-        if(imgs.length > 0) {
-            imgs[i].classList.remove("active");
-            i = (i + 1) % imgs.length;
-            imgs[i].classList.add("active");
-        }
-    }, 3000);
-
-    return { div, interval, duration: photos.length * 3000 };
 }
 
-// Particules
-setInterval(() => {
-    let p = document.createElement("div");
-    p.className = "particle";
-    p.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 8000);
-}, 3000);
+// 2. Remise à zéro de tous les effets
+function resetAnimation() {
+    activeIntervals.forEach(clearInterval);
+    activeIntervals = [];
 
-// Séquence d'animation
-const delay = 2000;
+    const ids = ['glowBruno', 'glowAlicia', 'glowCenter', 'carousel-bruno', 'carousel-alicia', 'carousel-couple', 'nousTxt', 'ring'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.opacity = "0";
+            el.classList.remove('show');
+        }
+    });
+}
 
+// 3. Lancement de la séquence magique
 function startTreeAnimation() {
     resetAnimation();
     prepareCarousels();
 
-    // 1. Apparition du cercle de Bruno
+    // Apparition Bruno
     setTimeout(() => {
         document.getElementById('glowBruno').style.opacity = "1";
-        document.getElementById('carousel-bruno').classList.add('show');
+        const c = document.getElementById('carousel-bruno');
+        c.classList.add('show');
+        activeIntervals.push(runRotation(c));
     }, 500);
 
-    // 2. Apparition du cercle d'Alicia
+    // Apparition Alicia
     setTimeout(() => {
         document.getElementById('glowAlicia').style.opacity = "1";
-        document.getElementById('carousel-alicia').classList.add('show');
+        const c = document.getElementById('carousel-alicia');
+        c.classList.add('show');
+        activeIntervals.push(runRotation(c));
     }, 3500);
 
-    // 3. Apparition du cercle "Nous"
+    // Apparition "Nous"
     setTimeout(() => {
         document.getElementById('glowCenter').style.opacity = "1";
+        document.getElementById('nousTxt').style.opacity = "1";
         document.getElementById('ring').style.opacity = "1";
-        document.getElementById('carousel-couple').classList.add('show');
+        const c = document.getElementById('carousel-couple');
+        c.classList.add('show');
+        activeIntervals.push(runRotation(c));
     }, 6500);
 }
+
+// Gère le défilement des photos dans un cercle
+function runRotation(container) {
+    let current = 0;
+    return setInterval(() => {
+        const imgs = container.querySelectorAll('img');
+        if (imgs.length === 0) return;
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+    }, 3000);
+}
+
+// --- DÉTECTION AU SCROLL ---
+const treeSection = document.querySelector('#arbre-magique');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            startTreeAnimation();
+            // Optionnel : observer.unobserve(treeSection); // Si on veut que ça ne se lance qu'une fois
+        }
+    });
+}, { threshold: 0.5 }); // Déclenche quand 50% de la section est visible
+
+observer.observe(treeSection);
+
+// --- BOUTON RELANCER ---
+document.getElementById('btn-replay').onclick = () => {
+    document.getElementById('titre-racines').scrollIntoView({ behavior: 'smooth' });
+    startTreeAnimation();
+};
