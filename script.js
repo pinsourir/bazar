@@ -137,36 +137,26 @@ setInterval(() => {
 // Séquence d'animation
 const delay = 2000;
 
-// 1. Bruno
-setTimeout(() => {
-    document.getElementById('glowBruno').style.opacity = 1;
-    let c = createCarousel('carousel-bruno', brunoPhotos);
-    
+function startTreeAnimation() {
+    resetAnimation();
+    prepareCarousels();
+
+    // 1. Apparition du cercle de Bruno
     setTimeout(() => {
-        document.getElementById('glowBruno').style.opacity = 0;
-        c.div.classList.replace("show", "hide");
-        clearInterval(c.interval);
-    }, c.duration);
-}, delay);
+        document.getElementById('glowBruno').style.opacity = "1";
+        document.getElementById('carousel-bruno').classList.add('show');
+    }, 500);
 
-// 2. Alicia (se lance après Bruno)
-const aliciaStart = delay + (brunoPhotos.length * 3000) + 1000;
-setTimeout(() => {
-    document.getElementById('glowAlicia').style.opacity = 1;
-    let c = createCarousel('carousel-alicia', aliciaPhotos);
-
+    // 2. Apparition du cercle d'Alicia
     setTimeout(() => {
-        document.getElementById('glowAlicia').style.opacity = 0;
-        c.div.classList.replace("show", "hide");
-        clearInterval(c.interval);
-    }, c.duration);
-}, aliciaStart);
+        document.getElementById('glowAlicia').style.opacity = "1";
+        document.getElementById('carousel-alicia').classList.add('show');
+    }, 3500);
 
-// 3. Couple
-const coupleStart = aliciaStart + (aliciaPhotos.length * 3000) + 1000;
-setTimeout(() => {
-    document.getElementById('glowCenter').style.opacity = 1;
-    document.getElementById('nousTxt').style.opacity = 1;
-    document.getElementById('ring').style.opacity = 1;
-    createCarousel('carousel-couple', couplePhotos);
-}, coupleStart);
+    // 3. Apparition du cercle "Nous"
+    setTimeout(() => {
+        document.getElementById('glowCenter').style.opacity = "1";
+        document.getElementById('ring').style.opacity = "1";
+        document.getElementById('carousel-couple').classList.add('show');
+    }, 6500);
+}
