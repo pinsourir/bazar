@@ -564,6 +564,7 @@ footer {
     opacity: 0;
     filter: blur(20px);
     transition: 2s;
+    z-index: 1;
 }
 
 .ring {
