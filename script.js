@@ -94,10 +94,28 @@ function moveSlide(direction) {
 /*-------------------------------------------------
                   LOGIQUE DE L'ARBRE
 --------------------------------------------------*/
+// J'ai pris des images d'exemple sur Internet pour toi !
 const photosData = {
-    bruno: ["b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg"],
-    alicia: ["a1.jpg", "a2.jpg", "a3.jpg", "a4.jpg", "a5.jpg"],
-    couple: ["c1.jpg", "c2.jpg", "c3.jpg", "c4.jpg", "c5.jpg", "c6.jpg", "c7.jpg"]
+    // Exemples d'hommes (b1.jpg, b2.jpg, b3.jpg)
+    bruno: [
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fit=crop&w=400&h=400",
+        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=400&h=400",
+        "https://images.unsplash.com/photo-1520341280432-4749d4d7bcf9?fit=crop&w=400&h=400"
+    ],
+    // Exemples de femmes (a1.jpg, a2.jpg, a3.jpg)
+    alicia: [
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fit=crop&w=400&h=400",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=400&h=400",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?fit=crop&w=400&h=400"
+    ],
+    // Exemples de couples (c1.jpg, c2.jpg, c3.jpg, etc.)
+    couple: [
+        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?fit=crop&w=400&h=400", // Couple amoureux
+        "https://images.unsplash.com/photo-1511208687131-419b6795861b?fit=crop&w=400&h=400", // Couple main dans la main
+        "https://images.unsplash.com/photo-1537160751965-037a505f639a?fit=crop&w=400&h=400", // Couple riant
+        "https://images.unsplash.com/photo-1516575317770-f47a46c10740?fit=crop&w=400&h=400", // Couple sur la plage
+        "https://images.unsplash.com/photo-1521119989659-a83eee488004?fit=crop&w=400&h=400"  // Couple mariage
+    ]
 };
 
 let activeIntervals = [];
@@ -112,6 +130,7 @@ function prepareCarousels() {
         photosData[key].forEach((src, index) => {
             const img = document.createElement("img");
             img.src = src;
+            img.loading = "lazy"; // Charge plus vite
             if (index === 0) img.classList.add("active");
             container.appendChild(img);
         });
@@ -138,34 +157,37 @@ function startTreeAnimation() {
     resetAnimation();
     prepareCarousels();
 
-    // Apparition Bruno
+    // Apparition Bruno (après 0.5s)
     setTimeout(() => {
-        document.getElementById('glowBruno').style.opacity = "1";
-        const c = document.getElementById('carousel-bruno');
-        c.classList.add('show');
-        activeIntervals.push(runRotation(c));
+        const glow = document.getElementById('glowBruno');
+        glow.style.opacity = "1"; // Le halo solo apparaît
+        const container = document.getElementById('carousel-bruno');
+        container.classList.add('show'); // Le carrousel solo apparaît
+        activeIntervals.push(runRotation(container)); // Il commence à tourner
     }, 500);
 
-    // Apparition Alicia
+    // Apparition Alicia (après 3.5s)
     setTimeout(() => {
-        document.getElementById('glowAlicia').style.opacity = "1";
-        const c = document.getElementById('carousel-alicia');
-        c.classList.add('show');
-        activeIntervals.push(runRotation(c));
+        const glow = document.getElementById('glowAlicia');
+        glow.style.opacity = "1"; // Le halo solo apparaît
+        const container = document.getElementById('carousel-alicia');
+        container.classList.add('show'); // Le carrousel solo apparaît
+        activeIntervals.push(runRotation(container)); // Il commence à tourner
     }, 3500);
 
-    // Apparition "Nous"
+    // Apparition Couple (après 6.5s)
     setTimeout(() => {
-        document.getElementById('glowCenter').style.opacity = "1";
+        const glow = document.getElementById('glowCenter');
+        glow.style.opacity = "1";
         document.getElementById('nousTxt').style.opacity = "1";
         document.getElementById('ring').style.opacity = "1";
-        const c = document.getElementById('carousel-couple');
-        c.classList.add('show');
-        activeIntervals.push(runRotation(c));
+        const container = document.getElementById('carousel-couple');
+        container.classList.add('show');
+        activeIntervals.push(runRotation(container));
     }, 6500);
 }
 
-// Gère le défilement des photos dans un cercle
+// Fonction pour faire tourner les images
 function runRotation(container) {
     let current = 0;
     return setInterval(() => {
@@ -183,7 +205,7 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             startTreeAnimation();
-            // Optionnel : observer.unobserve(treeSection); // Si on veut que ça ne se lance qu'une fois
+            observer.unobserve(treeSection); // Optionnel : ne le lance qu'une fois
         }
     });
 }, { threshold: 0.5 }); // Déclenche quand 50% de la section est visible
