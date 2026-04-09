@@ -1,3 +1,4 @@
+alert("Le code magique est activé !");
 // ===== COMPTE À REBOURS MARIAGE =====
 
 // Date du mariage : 26 août 2027 à 15h
