@@ -94,7 +94,7 @@ function moveSlide(direction) {
 /*-------------------------------------------------
                   LOGIQUE DE L'ARBRE
 --------------------------------------------------*/
-// J'ai pris des images d'exemple sur Internet pour toi !
+// images d'exemple sur Internet
 const photosData = {
     // Exemples d'hommes (b1.jpg, b2.jpg, b3.jpg)
     bruno: [
