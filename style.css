@@ -532,30 +532,34 @@ footer {
     overflow: hidden;
     box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
     border: 3px solid #d4af37;
-    background: white;
-    opacity: 0;
+    background: #fff; /* Fond blanc en attendant la photo */
+    opacity: 0; /* Garde 0 ici, le JS va le passer à 1 */
     transform: scale(0.5);
-    transition: 2s;
-    z-index: 5; /* Devant les halos */
+    transition: all 2s ease; /* Transition plus fluide */
+    z-index: 5;
+    position: relative; /* IMPORTANT pour le positionnement des images */
 }
 
-.carousel-placeholder.show { opacity: 1; transform: scale(1); }
+/* On force l'affichage quand la classe .show est ajoutée */
+.carousel-placeholder.show { 
+    opacity: 1 !important; 
+    transform: scale(1) !important; 
+}
 
 .carousel-placeholder img {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: 1.5s;
+    opacity: 0; 
+    transition: opacity 1.5s;
 }
-.carousel-placeholder img.active { opacity: 1; }
 
-#arbre-magique .label {
-    font-family: 'Great Vibes', cursive;
-    color: #d4af37;
-    font-size: 35px;
-    margin-bottom: 10px;
+/* Cette classe permet de voir l'image active */
+.carousel-placeholder img.active { 
+    opacity: 1 !important; 
 }
 
 /* Les halos lumineux unifiés */
