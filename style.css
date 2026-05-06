@@ -1,619 +1,131 @@
-/* ==========================================================
-   1. BASES & TYPOGRAPHIE (Original conservé)
-   ========================================================== */
-body {
-    margin: 0;
-    padding-top: 70px;
-    font-family: 'Playfair Display', serif; /* Police chic par défaut */
-    background-color: #fff5f8;
-    color: #333;
-    text-align: center;
-    scroll-behavior: smooth;
-    overflow-x: hidden; /* CORRECTIF : Empêche le scroll horizontal */
+@import "compass";
+html {
+/*
+* Prototype background.
+*/
+background: -webkit-linear-gradient(-90deg, rgba(0, 0, 0, .05) 1px, transparent 1px);
+background: -moz-linear-gradient(-90deg, rgba(0, 0, 0, .05) 1px, transparent 1px);
+background: -o-linear-gradient(-90deg, rgba(0, 0, 0, .05) 1px, transparent 1px);
+background: linear-gradient(-90deg, rgba(0, 0, 0, .05) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, .05) 1px, transparent 1px), linear-gradient(-90deg, rgba(0, 0, 0, .04) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, .04) 1px, transparent 1px), linear-gradient(transparent 3px, #f2f2f2 3px, #f2f2f2 78px, transparent 78px), linear-gradient(-90deg, #aaa 1px, transparent 1px), linear-gradient(-90deg, transparent 3px, #f2f2f2 3px, #f2f2f2 78px, transparent 78px), linear-gradient(#aaa 1px, transparent 1px), #f2f2f2;
+				background-size: 4px 4px, 4px 4px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
 }
 
-
-/* CORRECTIF : Empêche les paddings de faire gonfler les boîtes */
-* {
-    box-sizing: border-box;
-}
-
-/* Espacement automatique pour tous les titres (Original conservé) */
-h2 {
-    margin-bottom: 20px;
-    margin-top: 10px;
-    font-family: 'Playfair Display', serif; /* Police classe pour TOUS les titres */
-    color: #4b2e83; /* Violet foncé pour le contraste */
-}
-
-h3 {
-    margin-bottom: 20px;
-    margin-top: 10px;
-    font-family: 'Playfair Display', serif; /* Police classe pour TOUS les titres */
-    color: #c9a1f7; /* Violet claire pour le contraste */
-}
-
-/* texte caligraphier en noir*/
-.texte {
-    color: #000;
-    margin-bottom: 10px;
-    font-style: italic;
-}
-/* texte caligraphier en gris*/
-.subtitles {
-    color: #777;
-    margin-bottom: 10px;
-    font-style: italic;
-}
-
-p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-/* Cas particulier pour le Menu (ton image) */
-#menu p {
-    font-weight: normal;
-    margin: 10px 0;
-}
-
-/* ==========================================================
-   2. LA NAVIGATION (Rétablie comme avant)
-   ========================================================== */
-.navbar {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    height: 70px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-    padding: 0 20px;
-}
-
-.navbar-logo {
+.envelope {
+  position: relative;
+  width: 240px;
+  height: 0px;
+  margin: 200px auto;
+.icon-envelope {
+  z-index: 1;
+  position: relative;
+  width: 240px;
+  height: 45px;
+  background-color: #40BAA5;
+  box-shadow: 0px 5px 0px #36897F;
+  &:before {
+    z-index: 1;
     position: absolute;
-    left: 30px; /* On l'écarte un peu plus du bord gauche pour respirer */
-    top: 0;
-    height: 70px;
-    width: 100px; /* On limite la largeur pour ne pas gêner les liens */
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centre le logo dans son propre cadre */
-    overflow: hidden; 
-    text-decoration: none;
-}
-
-.navbar-logo img {
-    height: 100px; /* On réduit un tout petit peu la taille interne */
-    width: auto;
-    object-fit: contain;
-    /* Le transform translate ajuste la position millimétrée (X, Y) */
-    transform: scale(0.9) translateY(2px); 
     display: block;
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    width: 80%; /* Un peu moins de 100% pour ne pas coller aux bords */
-    justify-content: space-evenly; /* RÉPARTITION SUR LA LONGUEUR */
-    margin: 0; padding: 0;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #c499ff !important; /* Ton violet de base */
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 1px;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: #8a5fd3 !important; /* Violet plus foncé au survol */
-}
-
-/* LE HAMBURGER (Caché sur PC, comme avant) */
-.hamburger {
-    display: none; 
-    font-size: 30px;
-    cursor: pointer;
-    color: #c499ff;
-    position: absolute;
-    right: 20px; /* À droite, comme avant */
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5001;
-}
-
-/* ==========================================================
-   3. ADAPTATION MOBILE (Rétablie comme avant)
-   ========================================================== */
-@media (max-width: 900px) {
-    .hamburger {
-        display: block !important; /* Le burger apparaît sur tel */
-    }
-
-    .nav-links {
-        display: none; /* Caché par défaut */
-        flex-direction: column;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100vh;
-        background-color: white; /* Fond blanc uni, comme avant */
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        z-index: 5000;
-    }
-
-    .nav-links.open {
-        display: flex !important;
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Style des textes dans le menu mobile */
-    .nav-links a {
-        font-size: 22px !important; /* Plus grand pour cliquer facilement avec le doigt */
-        color: #4b2e83 !important;   /* Violet plus foncé pour le contraste */
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        border-bottom: 1px solid #f3e9ff; /* Petite ligne fine entre chaque lien */
-        padding-bottom: 5px;
-        width: 80%; /* Pour que la bordure ne touche pas les bords */
-        text-align: center;
-    }
-
-    /* CORRECTIF : Cache le logo "AB" quand le menu mobile est ouvert */
-    .nav-links.open ~ .nav-logo-container {
-        display: none;
-    }
-}
-
-/* ==========================================================
-   4. HERO & SECTIONS (Style original conservé)
-   ========================================================== */
-.hero {
-    background: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486') center/cover no-repeat;
-    height: 100vh;
-    position: relative;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.overlay {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 40px;
-    border-radius: 10px;
-}
-
-/* Pour les grands titres romantiques (ex: Alicia & Bruno) */
-.hero h1 {
-   font-family: "Fleur De Leah", cursive;
-   font-weight: 400;
-   font-style: normal;
-   font-size: 6rem; /* On l'agrandit car les polices cursives paraissent plus petites */
-   color: white;
-   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Un léger ombre pour la lisibilité */
-}
-
-/* Pour les sous-titres élégants */
-.countdown-title, .subtitle {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-weight: 600;
-}
-
-.date {
-    font-size: 1.3rem;
-    margin-top: 10px;
-}
-
-.tagline {
-    margin-top: 15px;
-}
-
-.hero-buttons {
-    margin-top: 25px;
-}
-
-/* ===== BOUTONS ===== */
-.btn {
-    display: inline-block;
-    padding: 12px 25px;
-    border-radius: 25px;
-    background-color: #c499ff;
-    color: white;
-    text-decoration: none;
-    margin: 10px;
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background-color: #dcc5fc;
-}
-
-/* ===== SECTIONS ===== */
-section {
-    padding: 100px 20px;
-}
-
-.section-white {
-    background: white;
-}
-
-.section-purple {
-    background: linear-gradient(to bottom, #ffffff, #f3e9ff);
-    color: #4b2e83;
-}
-
-/* ==========================================================
-   5. TIMELINE, GALERIE & RSVP (Style original conservé)
-   ========================================================== */
-.timeline {
-    max-width: 600px;
-    margin: auto;
-    border-left: 4px solid #4b2e83;
-    padding-left: 20px;
-}
-
-.timeline-item {
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.timeline-item h3 {
-    margin: 0;
-}
-
-/* ===== GALERIE ===== */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.gallery img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-/* ===== RSVP ===== */
-
-.rsvp {
-    background-color: #f3e9ff; /* Un violet très pâle et élégant */
-    color: #4b2e83; /* On met le texte en violet foncé pour qu'il soit bien lisible */
-    padding: 80px 20px;
-}
-
-/* Si tu as un titre à l'intérieur de cette section */
-.rsvp h2 {
-    color: #4b2e83; /* Pour que le titre "Confirmation de présence" ressorte bien */
-}
-
-/* ===== FOOTER ===== */
-footer {
-    padding: 20px;
-    background: #c499ff;
-    color: white;
-}
-
-/* ==========================================================
-   6. COMPTE À REBOURS LUXE (Style original conservé)
-   ========================================================== */
-.countdown-luxe {
-    background: linear-gradient(to bottom, #fdfbff, #f3e9ff);
-    padding: 100px 20px;
-    text-align: center;
-}
-/* titre caligraphier en violet foncé*/
-.countdown-title {
-    font-size: 2.5rem;
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 10px;
-    color: #4b2e83;
-}
-/* texte caligraphier en gris*/
-.countdown-subtitle {
-    color: #777;
-    margin-bottom: 50px;
-    font-style: italic;
-}
-
-.countdown-container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.time-box {
-    background: white;
-    padding: 30px 25px;
-    border-radius: 20px;
-    min-width: 120px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    position: relative;
-    overflow: hidden;
-}
-
-.time-box span {
-    font-size: 2.8rem;
-    font-weight: bold;
-    color: #c499ff;
-    display: inline-block;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.time-box small {
+    content: '';
+    top: -75px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 75px 0 0 120px;
+    border-color: transparent transparent transparent #40BAA5;
+  }
+  &:after {
+    z-index: 1;
     display: block;
-    margin-top: 8px;
-    color: #888;
-    letter-spacing: 1px;
-}
-
-/* Animation douce (Style original conservé) */
-.flip {
-    transform: translateY(-10px);
-    opacity: 0.5;
-}
-
-/* ==========================================================
-   7. CARROUSEL & ADAPTATIONS HERO (Style original conservé)
-   ========================================================== */
-.carousel-wrapper {
-    position: relative;
-    width: 90%; /* S'adapte sur mobile */
-    max-width: 450px; /* Largeur max portrait */
-    margin: 30px auto;
-}
-
-.carousel-container {
-    width: 100%;
-    overflow: hidden; /* Cache la barre de défilement */
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.carousel-slide {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.carousel-slide img {
-    width: 100%;
-    flex-shrink: 0;
-    height: 600px; /* Hauteur plus grande pour le vertical */
-    object-fit: cover; /* Remplit sans déformer */
-}
-
-/* Flèches */
-.carousel-btn {
+    content: '';
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 10;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #4b2e83;
+    top: -75px;
+    right: 0px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 0 75px 120px;
+    border-color: transparent transparent #40BAA5 transparent;
+  }
 }
-
-.carousel-btn:hover { background: white; }
-.prev { left: -20px; }
-.next { right: -20px; }
-
-/* ==========================================================
-   Palette de couleurs Jardin d'été
-   ========================================================== */
-.color-palette {
-    margin-top: -10px;
-    margin-bottom: 40px;  /* On crée un bel espace avant la question suivante */
-    text-align: center;
-}
-
-.color-palette p {
-    margin-top: 0; /* Supprime l'espace entre le titre et cette phrase */
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 15px; /* Espace maîtrisé avant les pastilles */
-}
-
-.swatches {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Espace entre les pastilles */
-}
-
-.swatch {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%; /* Rend la pastille ronde */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Petit relief classe */
-    border: 2px solid white; /* Contour blanc pour détacher du fond */
-}
-
-/* Les 4 couleurs extraites de ton image */
-.color-1 { background-color: #616e53; } /* Vert Mousse Profond (Le plus haut) */
-.color-2 { background-color: #929a8a; } /* Vert Sauge Pâle */
-.color-3 { background-color: #ba9a92; } /* Rose Poudré (Nude) */
-.color-4 { background-color: #f7d6d1; } /* Rose Pâle Romantique (Le plus bas) */
-.color-5 { background-color: #fceae8; } /* Le rose le plus clair, comme ton fond */
-
-/* Correction Adaptabilité Mobile Globale (Style original conservé) */
-@media (max-width: 768px) {
-     CORRECTIF : Réduit le titre Alicia & Bruno pour qu'il tienne sur tel */
-    .hero h1 {
-        font-size: 3.5rem !important; 
-    }
-
-    .carousel-slide img {
-        height: 450px; /* Un peu plus petit sur petit écran */
-    }
-    .prev { left: 5px; }
-    .next { right: 5px; }
-}
-
-
-
-
-
-/* ==========================================
-         SECTION ARBRE MAGIQUE 
-============================================ */
-/* --- SECTION ARBRE MAGIQUE --- */
-#arbre-magique {
-    background-color: #ffffff !important;
-}
-
-.tree-container {
-    position: relative;
-    width: 100%;
-    height: 80vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.tree-bg {
+.header {
+    z-index: 2;
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url("arbre.png") center center / contain no-repeat;
+    top: -75px;
+    display: block;
+    box-shadow: 0px 0px 0px #36897F;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 120px 83px 120px;
+    border-color: transparent transparent #36897F transparent;
+    transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transition: all 1s;
+    &:before {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: -120px;
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: 0 120px 75px 120px;
+      border-color: transparent transparent #40BAA5 transparent;
+    }
+  }
+.letter {
     z-index: 0;
-}
-
-.inner-layout {
-    position: relative;
-    width: 100%;
-    max-width: 1000px; 
-    height: 100%;
-    z-index: 2;
-}
-
-.person-section {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 3;
+    width: 150px;
+    height: 0px;
+    background: #FFF;
+    left: 45px;
+    bottom: 0px;
+    opacity: 1;
+    transition: all 2s;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      width: 100px;
+      height: 6px;
+      background-color: #FED350;
+      transition: all 1.5s;
+    }
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 35px;
+      left: 25px;
+      width: 100px;
+      height: 6px;
+      background-color: #FED350;
+      transition: all 1.5s;
+    }
+  }
+&:hover {
+    .header {
+      z-index: 0;
+      top: -160px;
+      transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      border-width: 0 120px 75px 120px;
+      &:before {
+        top: 0px;
+        box-shadow: 0px 5px 0px #36897F;
+      }
+    }
+    .letter {
+      bottom: 0px;
+      height: 100px;
+      opacity: 1;
+    }
+  }
 }
-
-/* Positions pour s'aligner sur tes taches */
-.left { top: 15%; left: 15%; } /* Bruno */
-.right { top: 15%; right: 15%; } /* Alicia */
-.center { top: 55%; left: 50%; transform: translate(-50%, -50%); } /* Couple */
-
-.carousel-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-    border: 3px solid #d4af37;
-    background: #fff; /* Fond blanc en attendant la photo */
-    opacity: 0; /* Garde 0 ici, le JS va le passer à 1 */
-    transform: scale(0.5);
-    transition: all 2s ease; /* Transition plus fluide */
-    z-index: 5;
-    position: relative; /* IMPORTANT pour le positionnement des images */
-}
-
-/* On force l'affichage quand la classe .show est ajoutée */
-.carousel-placeholder.show { 
-    opacity: 1 !important; 
-    transform: scale(1) !important; 
-}
-
-.carousel-placeholder img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0; 
-    transition: opacity 1.5s;
-}
-
-/* Cette classe permet de voir l'image active */
-.carousel-placeholder img.active { 
-    opacity: 1 !important; 
-}
-
-/* Les halos lumineux unifiés */
-.glow {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.45), transparent);
-    filter: blur(25px);
-    z-index: 1; /* Derrière les photos, devant l'arbre */
-}
-
-.ring {
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    border: 2px solid #d4af37;
-    border-radius: 50%;
-    opacity: 0;
-    transition: 2s;
-    animation: spinArbre 12s linear infinite;
-    z-index: 2;
-}
-
-@keyframes spinArbre {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Adaptation mobile */
-@media (max-width: 768px) {
-    .carousel-placeholder { width: 90px; height: 90px; }
-    #arbre-magique .label { font-size: 24px; }
-    .left { left: 5%; top: 20%; }
-    .right { right: 5%; top: 20%; }
-    .center { top: 60%; }
-}
-
-/* --- BOUTON HARMONISÉ (Correction) --- */
-#btn-replay {
-    font-family: inherit; /* Utilise Playfair Display */
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #c499ff;
-    padding: 12px 25px;
-    border-radius: 25px;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Ombre nette */
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#btn-replay:hover {
-    background-color: #dcc5fc;
-}
-
